@@ -1,25 +1,29 @@
 import os
 import rich 
-from rich.prompt import Prompt
+from rich.prompt import Prompt, IntPrompt
 from rich.console import Console
 from rich.panel import Panel
 from rich.layout import Layout
 from rich.markdown import Markdown
 from rich.table import Table
 from rich.rule import Rule
-console = Console(log_path = False)
+console = Console(log_path = False, highlight = False)
 
-'''
-panel = Panel("txt", style="")
-layout = Layout()
-layout.split_row(panel)
-console.print(layout)
-'''
 
-SAMPDIV = ['<samp>\n\n', '</samp>\n\n']
-CENTERDIV = ['<p align="center">\n', '\n</p>']
-PULSING_BAR = CENTERDIV[0] + '\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif">' + CENTERDIV[1]
-REPOBEATS = CENTERDIV[0] + '\n![RepoBeats generator](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")\n' + CENTERDIV[1]
+pulsingbar = '\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">'
+repobeats = '<p align="center">\n\n![RepoBeats generator](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")\n'
+
+def samp(content: str) -> str:
+    return '<samp>\n\n' + content + '</samp>\n\n'
+
+def center(content: str) -> str:
+    return '<p align="center">\n' + content + '\n</p>'
+
+def underline(content: str) -> str:
+    return '<u>' + content + '</u>'
+
+def details(content: str, summary: str) -> str:
+    return f'<details>\n\n  <summary>\n\n  ##### {summary}*\n\n  </summary>\n\n{content}\n\n</details>'
 
 ### Generator subclasses
 
@@ -42,17 +46,96 @@ class Section:
         self.index = index
         self.title = self.get_section_title()
         self.contents = []
-        self.samp = True
     
     def get_section_title(self) -> str:
         return Prompt.ask(prompt='Enter section title', default=f'Section n°{self.index+1}', show_default=False, console=console)
+    
+    def select_content(self):
+        if self.contents == []:
+            return None
+        target_index = IntPrompt.ask(
+            prompt = 'Enter content index', 
+            choices = [str(i+1) for i in range(len(self.contents))], 
+            show_choices = True, 
+            default = len(self.contents),
+            show_default = False,
+            console = console
+        )
+        return target_index
+        
+    def add_content(self, parent):
+        console.log('Entering content creation menu', style = 'bold')
+        while(True):
+            ctype = Prompt.ask(
+                prompt = 'Enter content type to add', 
+                choices = ['p', 't', 'i', 'b', 'h', 'q'], 
+                show_choices = True, 
+                default = len(self.contents)+1,
+                show_default = False,
+                console = console
+            )
+            match ctype:
+                case 'p':
+                    new_content = Prompt.ask('Enter paragraph content', default = 'Empty paragraph', show_default = False)
+                    console.log(f'Paragraph created in section [italic]{self.title}[/italic]', style = 'bold')
+                case 't':
+                    new_content = Prompt.ask('Enter Table title', default = 'Table title', show_default = False)
+                    width = IntPrompt.ask('Enter table width in column', default = 3, show_default = False)
+                    height = IntPrompt.ask('Enter table height in rows', default = 2, show_default = False)
+                    new_content += '\n' + '|  Column  ' * width + '|\n'
+                    new_content += '|----------' * width + '|\n'
+                    new_content += ('|          ' * width + '|\n') * height
+                    console.log(f'Table with size {width}x{height} created in section [italic]{self.title}[/italic]', style = 'bold')
+                case 'i':
+                    link = Prompt.ask('Paste image URL', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
+                    img_width = IntPrompt.ask('Enter image width', default = 200, show_default = False)
+                    img_title = Prompt.ask('Enter image title', default = 'Dogwifhat is goated', show_default = False)
+                    new_content = center(underline(img_title)) + '\n' + center(f'\t<img width = "{img_width}" src="{link}">')
+                    console.log(f'Image created using {img_width}px width in section [italic]{self.title}[/italic]', style = 'bold')
+                case 'b':
+                    blockquoted_text = Prompt.ask('Enter blockquote content', default = 'Blockquoted text', show_default = False)
+                    new_content = '> ' + blockquoted_text
+                    console.log(f'Blockquote created in section [italic]{self.title}[/italic]', style = 'bold')
+                case 'h':
+                    self.add_content_help()
+                case 'q':
+                    console.log('Exiting content creation menu', style = 'bold')
+                    break
+            self.contents.append(new_content)
+            parent.generate_content()
+    
+    def move_content(self):
+        console.log('Select target content index')
+        target = self.select_content()
+        if target == None:
+            console.print('Error: no content created', style = 'red')
+            return None
+        console.log('Select swap content index')
+        swap = self.select_content()
+        self.contents[target-1], self.contents[swap-1] = self.contents[swap-1], self.contents[target-1]
+        console.log(f'Content index {target} swapped with index {swap}', style = 'bold')
+    
+    def remove_content(self):
+        target = self.select_content()
+        console.log(f'Content with index {target} removed from section instance [italic]{target.title}[/italic]', style = 'bold')
+        del self.contents[target]
     
     def generate_section_content(self):
         section_content = '### ' + self.title + '\n\n'
         for content in self.contents:
             section_content += content + '\n\n'
-        if self.samp: section_content = SAMPDIV[0] + section_content + SAMPDIV[1]
         return section_content
+    
+    def add_content_help(self) -> None:
+        help = Table(title=Rule('Section edit menu help utility', style = 'white'), title_justify = 'left', border_style='white', min_width = 80)
+        help.add_column('Command', style='yellow', header_style='bold yellow')
+        help.add_column('Description', style='yellow', header_style='bold yellow')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('q', 'Exit from edit to sections management menu')
+        console.print(help)
         
 class Footer:
     def __init__(self, contents):
@@ -64,24 +147,36 @@ class Footer:
             footer_content += content + '\n\n'
         return footer_content
 
-
-
 # Generator class
 
 class Readme:
     def __init__(self):
         self.header: Header = Header()
-        self.footer: Footer = Footer([PULSING_BAR, REPOBEATS])
+        self.footer: Footer = Footer([center(pulsingbar), center(repobeats)])
         self.content: str = ''
         self.outfile: str = './OUTFILE.md'
         self.sections: list = []
         self.generate_content()
         self.run()
         
+    def select_section(self):
+        if self.sections == []:
+            return None
+        target = Prompt.ask(
+            prompt = 'Enter section title', 
+            choices = [section.title for section in self.sections], 
+            show_choices = True, 
+            default = self.sections[-1].title,
+            show_default = False,
+            console = console
+        )
+        return [section for section in self.sections if section.title == target][0]
+    
     def add_section(self):
         self.sections.append(Section(len(self.sections)))
         self.generate_content()
-
+        console.log(f'Section [italic]{self.sections[-1].title}[/italic] created in readme instance', style = 'yellow')
+        
     def move_section(self):
         console.log('Select target section')
         target = self.select_section()
@@ -92,14 +187,14 @@ class Readme:
         swap = self.select_section()
         t_index, s_index = self.sections.index(target), self.sections.index(swap)
         self.sections[t_index], self.sections[s_index] = self.sections[s_index], self.sections[t_index]
-        console.log(f'Section {target.title} swapped with {swap.title}')
+        console.log(f'Section [italic]{target.title}[/italic] swapped with [italic]{swap.title}[/italic]')
         self.generate_content()
         
     def remove_section(self):
         target = self.select_section()
-        console.log(f'Section [italic]{target.title}[/italic] removed from readme instance')
         self.sections = [section for section in self.sections if section != target]
         self.generate_content()
+        console.log(f'Section [italic]{target.title}[/italic] removed from readme instance')
         
     def edit_section(self):
         target = self.select_section()
@@ -110,28 +205,27 @@ class Readme:
         while(True):
             cmd = Prompt.ask(
                 prompt = f'[italic]{target.title}[/italic] edit command', 
-                choices = ['a', 'h', 'q'], 
+                choices = ['a', 'mv', 'rm', 'h', 'q'], 
                 show_choices = True,
                 console = console,
             )
             match cmd:
-                    case 'a':
-                        pass
-                    case 'h':
-                        self.section_edit_help()
-                    case 'q':
-                        console.log(f'Exiting session [italic]{target.title}[/italic] edit menu', style = 'bold blue')
-                        break
-        self.generate_content()
+                case 'a':
+                    target.add_content(self)
+                case 'mv':
+                    target.move_content()
+                case 'rm':
+                    target.remove_content()
+                case 'h':
+                    self.content_edit_help()
+                case 'q':
+                    console.log(f'Exiting [italic]{target.title}[/italic] edit menu', style = 'bold blue')
+                    break
+            self.generate_content()
         
     def manage_sections(self):
         console.log('Entering sections management menu', style = 'bold yellow')
         while(True):
-            
-            if 0: 
-                console.print('List of sections for debug')
-                for section in self.sections: rich.inspect(section)
-            
             cmd = Prompt.ask(
                 prompt = 'Section management command', 
                 choices = ['a', 'e', 'mv', 'rm', 'h', 'q'], 
@@ -179,51 +273,38 @@ class Readme:
         
         with open(self.outfile, 'w') as f:
             f.write(self.content)
-        # console.print(f'README.md template generated - {self.outfile}', style = '')
+        # console.print(f'README.md template generated - {self.outfile}', style = ')
     
-    def select_section(self):
-        if self.sections == []:
-            return None
-        target = Prompt.ask(
-            prompt = "Enter section's title", 
-            choices = [section.title for section in self.sections], 
-            show_choices = True, 
-            default = self.sections[-1].title,
-            show_default = False,
-            console = console
-        )
-        return [section for section in self.sections if section.title == target][0]
-
-    def section_edit_help(self) -> None:
-        help = Table(title=Rule("Section edit menu help utility", style = 'white'), title_justify = "left", border_style="white", min_width = 80)
-        help.add_column("Command", style="yellow", header_style="bold yellow")
-        help.add_column("Description", style="yellow", header_style="bold yellow")
-        help.add_row("'cmd'", "Edit function")
-        help.add_row("'cmd'", "Edit function")
-        help.add_row("'cmd'", "Edit function")
-        help.add_row("'cmd'", "Edit function")
-        help.add_row("'q'", "Exit from edit to sections management menu")
+    def content_edit_help(self) -> None:
+        help = Table(title=Rule('Section edit menu help utility', style = 'white'), title_justify = 'left', border_style='white', min_width = 80)
+        help.add_column('Command', style='yellow', header_style='bold yellow')
+        help.add_column('Description', style='yellow', header_style='bold yellow')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('cmd', 'Edit function')
+        help.add_row('q', 'Exit from edit to sections management menu')
         console.print(help)
         
     def sections_menu_help(self) -> None:
-        help = Table(title=Rule("Sections management help utility", style = 'white'), border_style="white", min_width = 80)
-        help.add_column("Command", style="yellow", header_style="bold yellow")
-        help.add_column("Description", style="yellow", header_style="bold yellow")
-        help.add_row("'a'",  "Add section")
-        help.add_row("'mv'", "Move section")
-        help.add_row("'rm'", "Remove section")
-        help.add_row("'h'",  "Display section management menu help")
-        help.add_row("'e'",  "Enter section edit menu")
-        help.add_row("'q'",  "Exit from sections management to main menu")
+        help = Table(title=Rule('Sections management help utility', style = 'white'), border_style='white', min_width = 80)
+        help.add_column('Command', style='yellow', header_style='bold yellow')
+        help.add_column('Description', style='yellow', header_style='bold yellow')
+        help.add_row('a',  'Add section')
+        help.add_row('mv', 'Move section')
+        help.add_row('rm', 'Remove section')
+        help.add_row('h',  'Display section management menu help')
+        help.add_row('e',  'Enter section edit menu')
+        help.add_row('q',  'Exit from sections management to main menu')
         console.print(help)
         
     def main_menu_help(self) -> None:
-        help = Table(title=Rule("Main menu help utility", style = 'white'), title_justify = "left", border_style="white", min_width = 80)
-        help.add_column("Command", style="yellow", header_style="bold yellow")
-        help.add_column("Description", style="yellow", header_style="bold yellow")
-        help.add_row("'s'", "Open section management menu")
-        help.add_row("'h'",  "Display main menu help")
-        help.add_row("'q'",  "Exit readme generator instance")
+        help = Table(title=Rule('Main menu help utility', style = 'white'), title_justify = 'left', border_style='white', min_width = 80)
+        help.add_column('Command', style='yellow', header_style='bold yellow')
+        help.add_column('Description', style='yellow', header_style='bold yellow')
+        help.add_row('s', 'Open section management menu')
+        help.add_row('h',  'Display main menu help')
+        help.add_row('q',  'Exit readme generator instance')
         console.print(help)
         
 generator = Readme()

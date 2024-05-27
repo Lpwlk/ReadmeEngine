@@ -1,33 +1,44 @@
-# Repository name
+# Debug main title
 
-<samp>
+### Debug section title
 
-### Section n°1
+Paragraph added 2nd
 
-</samp>
+Paragraph added 1st
 
-<samp>
+lets swap paragraphs
 
-### Section n°2
+great, it works
 
-</samp>
+Table works ?
+|  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |
+|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
+|          |          |          |          |          |          |          |          |          |          |
 
-<samp>
-
-### Section n°4
-
-</samp>
-
-<samp>
-
-### Section n°3
-
-</samp>
 
 <p align="center">
-	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif">
+<u>Dogwifhat is goated</u>
+</p>
+<p align="center">
+	<img width = "300" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
 </p>
 
+> This dawg is cool imo
+
+<p align="center">
+	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
+</p>
+
+<p align="center">
 <p align="center">
 
 ![RepoBeats generator](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")
