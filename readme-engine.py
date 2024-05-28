@@ -1,14 +1,8 @@
-import os
-import rich 
-from rich.prompt import Prompt, IntPrompt
+from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.console import Console
-from rich.panel import Panel
-from rich.layout import Layout
-from rich.markdown import Markdown
 from rich.table import Table
 from rich.rule import Rule
 console = Console(log_path = False, highlight = False)
-
 
 pulsingbar = '\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">'
 repobeats = '<p align="center">\n\n![RepoBeats generator](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")\n'
@@ -25,29 +19,40 @@ def underline(content: str) -> str:
 def details(content: str, summary: str) -> str:
     return f'<details>\n\n  <summary>\n\n  ##### {summary}*\n\n  </summary>\n\n{content}\n\n</details>'
 
-### Generator subclasses
+def blockquote(content: str) -> str:
+    return '> ' + content 
 
-class Header:
-    def __init__(self):
-        self.repo_name = self.get_repo_name()
-        self.contents = []
-       
-    def get_repo_name(self) -> str:
-        return Prompt.ask(prompt='Enter repo name', default=f'Repository name', show_default=False, console=console)
-    
-    def generate_header_content(self):
-        header_content = '# ' + self.repo_name + '\n\n'
-        for content in self.contents:
-            header_content += content + '\n\n'
-        return header_content
+def codeblock(content: str) -> str:
+    return '```\n' + content + '```'
+
+def mdtable(title: str, width: int, height: int) -> str:
+    mdtable = title
+    mdtable += '\n' + '|  Column  ' * width + '|\n'
+    mdtable += '|----------' * width + '|\n'
+    mdtable += ('|          ' * width + '|\n') * height
+    return mdtable
+
+def imagefmt(link: str, img_width: int, img_title: str) -> str:
+    return center(underline(img_title)) + '\n' + center(f'\t<img width = "{img_width}" src="{link}">')
+
+def mdheader(content: str, level: int):
+    return '#' * level + ' ' + content + '\n\n'
+
+def tocline(section_title: str):
+    return f'**[{section_title}](#{section_title.replace(' ', '-')})**<br>\n\n'
+            
+### Generator subclasses
     
 class Section:
-    def __init__(self, index: int):
+    def __init__(self, template: str = None, index: int = 0):
         self.index = index
-        self.title = self.get_section_title()
+        self.title = self.get_section_title(template)
         self.contents = []
     
-    def get_section_title(self) -> str:
+    def get_section_title(self, template) -> str:
+        if template != None:
+            return template
+        
         return Prompt.ask(prompt='Enter section title', default=f'Section n°{self.index+1}', show_default=False, console=console)
     
     def select_content(self):
@@ -68,7 +73,7 @@ class Section:
         while(True):
             ctype = Prompt.ask(
                 prompt = 'Enter content type to add', 
-                choices = ['p', 't', 'i', 'b', 'h', 'q'], 
+                choices = ['p', 't', 'i', 'b', 'pb', 'h', 'q'], 
                 show_choices = True, 
                 default = len(self.contents)+1,
                 show_default = False,
@@ -79,23 +84,24 @@ class Section:
                     new_content = Prompt.ask('Enter paragraph content', default = 'Empty paragraph', show_default = False)
                     console.log(f'Paragraph created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 't':
-                    new_content = Prompt.ask('Enter Table title', default = 'Table title', show_default = False)
-                    width = IntPrompt.ask('Enter table width in column', default = 3, show_default = False)
-                    height = IntPrompt.ask('Enter table height in rows', default = 2, show_default = False)
-                    new_content += '\n' + '|  Column  ' * width + '|\n'
-                    new_content += '|----------' * width + '|\n'
-                    new_content += ('|          ' * width + '|\n') * height
-                    console.log(f'Table with size {width}x{height} created in section [italic]{self.title}[/italic]', style = 'bold')
+                    table_title = Prompt.ask('Enter Table title', default = 'Table title', show_default = False)
+                    table_width = IntPrompt.ask('Enter table width in column', default = 3, show_default = False)
+                    table_height = IntPrompt.ask('Enter table height in rows', default = 2, show_default = False)
+                    new_content = mdtable(table_title, table_width, table_height)
+                    console.log(f'Table with size {table_width}x{table_height} created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'i':
                     link = Prompt.ask('Paste image URL', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
                     img_width = IntPrompt.ask('Enter image width', default = 200, show_default = False)
                     img_title = Prompt.ask('Enter image title', default = 'Dogwifhat is goated', show_default = False)
-                    new_content = center(underline(img_title)) + '\n' + center(f'\t<img width = "{img_width}" src="{link}">')
+                    new_content = imagefmt(link, img_width, img_title)
                     console.log(f'Image created using {img_width}px width in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'b':
                     blockquoted_text = Prompt.ask('Enter blockquote content', default = 'Blockquoted text', show_default = False)
-                    new_content = '> ' + blockquoted_text
+                    new_content = blockquote(blockquoted_text)
                     console.log(f'Blockquote created in section [italic]{self.title}[/italic]', style = 'bold')
+                case 'pb':
+                    new_content = center(pulsingbar)
+                    console.log(f'Pulsing bar separator created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'h':
                     self.add_content_help()
                 case 'q':
@@ -121,7 +127,7 @@ class Section:
         del self.contents[target]
     
     def generate_section_content(self):
-        section_content = '### ' + self.title + '\n\n'
+        section_content = mdheader(self.title, 3)
         for content in self.contents:
             section_content += content + '\n\n'
         return section_content
@@ -136,7 +142,26 @@ class Section:
         help.add_row('cmd', 'Edit function')
         help.add_row('q', 'Exit from edit to sections management menu')
         console.print(help)
-        
+
+class Header:
+    def __init__(self):
+        self.repo_name = self.get_repo_name()
+        self.dotoc = self.assert_toc()
+        self.contents = []
+
+    def get_repo_name(self) -> str:
+        return Prompt.ask(prompt='Enter repo name', default=f'Repository name', show_default=False, console=console)
+    
+    def assert_toc(self) -> str | None:        
+        if Confirm.ask('Add Table of Content in header ?'): return True
+        else: return False
+    
+    def generate_header_content(self):
+        header_content = mdheader(self.repo_name, 1) + '\n\n'
+        for content in self.contents:
+            header_content += content + '\n\n'
+        return header_content
+    
 class Footer:
     def __init__(self, contents):
         self.contents = contents
@@ -157,7 +182,6 @@ class Readme:
         self.outfile: str = './OUTFILE.md'
         self.sections: list = []
         self.generate_content()
-        self.run()
         
     def select_section(self):
         if self.sections == []:
@@ -173,7 +197,7 @@ class Readme:
         return [section for section in self.sections if section.title == target][0]
     
     def add_section(self):
-        self.sections.append(Section(len(self.sections)))
+        self.sections.append(Section(index = len(self.sections)))
         self.generate_content()
         console.log(f'Section [italic]{self.sections[-1].title}[/italic] created in readme instance', style = 'yellow')
         
@@ -266,6 +290,7 @@ class Readme:
                     break
                 
     def generate_content(self):
+        if self.header.dotoc: self.header.contents = [self.make_toc()]
         self.content = self.header.generate_header_content()
         for section in self.sections:
             self.content += section.generate_section_content()
@@ -274,6 +299,12 @@ class Readme:
         with open(self.outfile, 'w') as f:
             f.write(self.content)
         # console.print(f'README.md template generated - {self.outfile}', style = ')
+        
+    def make_toc(self) -> str:
+        toc = mdheader('Table of Contents', 3)
+        for section in self.sections:
+            toc += tocline(section.title)
+        return toc
     
     def content_edit_help(self) -> None:
         help = Table(title=Rule('Section edit menu help utility', style = 'white'), title_justify = 'left', border_style='white', min_width = 80)
@@ -306,5 +337,19 @@ class Readme:
         help.add_row('h',  'Display main menu help')
         help.add_row('q',  'Exit readme generator instance')
         console.print(help)
-        
+
+
 generator = Readme()
+
+generator.run()
+
+# description = Section('Description')
+# description.contents=['Description of the repo']
+# generator.sections.append(description)
+# generator.sections.append(Section('Install'))
+# generator.sections.append(Section('Usage'))
+# generator.sections.append(Section('Developement'))
+# generator.sections.append(Section('References'))
+# generator.sections.append(Section('Author'))
+# generator.sections.append(Section('License'))
+# generator.generate_content()

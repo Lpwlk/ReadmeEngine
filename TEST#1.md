@@ -1,27 +1,16 @@
-# Repository name
+# Debug main title
 
+### Debug section title
 
+Paragraph added 2nd
 
-### Table of Contents
+Paragraph added 1st
 
-**[Test](#Test)**<br>
+lets swap paragraphs
 
-**[Section n°2](#Section-n°2)**<br>
+great, it works
 
-
-
-### Test
-
-<p align="center">
-<u>Dog still cool af</u>
-</p>
-<p align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
-</p>
-
-Test
-
-Dummytable
+Table works ?
 |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |
 |----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
 |          |          |          |          |          |          |          |          |          |          |
@@ -37,17 +26,13 @@ Dummytable
 
 
 <p align="center">
-	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
-</p>
-
-### Section n°2
-
-<p align="center">
 <u>Dogwifhat is goated</u>
 </p>
 <p align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
+	<img width = "300" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
 </p>
+
+> This dawg is cool imo
 
 <p align="center">
 	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
