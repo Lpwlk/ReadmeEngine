@@ -1,46 +1,18 @@
-# Repository name
+# Test
 
 
 
 ### Table of Contents
 
-**[Test](#Test)**<br>
+**[Debug toc with spaces](#Debug-toc-with-spaces)**<br>
 
-**[Section n°2](#Section-n°2)**<br>
+**[Section Test](#Section-Test)**<br>
 
-
-
-### Test
-
-<p align="center">
-<u>Dog still cool af</u>
-</p>
-<p align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
-</p>
-
-Test
-
-Dummytable
-|  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |  Column  |
-|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
-|          |          |          |          |          |          |          |          |          |          |
+**[Section test 2](#Section-test-2)**<br>
 
 
-<p align="center">
-	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
-</p>
 
-### Section n°2
+### Debug toc with spaces
 
 <p align="center">
 <u>Dogwifhat is goated</u>
@@ -48,6 +20,17 @@ Dummytable
 <p align="center">
 	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
 </p>
+
+<p align="center">
+<u>Dogwifhat is goated</u>
+</p>
+<p align="center">
+	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
+</p>
+
+### Section Test
+
+### Section test 2
 
 <p align="center">
 	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
