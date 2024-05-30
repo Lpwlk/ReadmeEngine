@@ -2,16 +2,24 @@ from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.console import Console
 from rich.table import Table
 from rich.rule import Rule
+
 console = Console(log_path = False, highlight = False)
 
-pulsingbar = '\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">'
-repobeats = '<p align="center">\n\n![RepoBeats generator](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")\n'
+default_repo_name = 'Lpwlk'
+default_dobadges = True
+default_gh_username = 'Lpwlk'
+default_dopybadges = True
+default_pypi_pckgname = 'pwlk'
+default_rbglink = '![RepoBeats analytics image](https://repobeats.axiom.co/api/embed/99c19ed191ab42775bc9297d8af467ccc608f2e7.svg "Repobeats analytics image")'
+
+def pulsing_bar() -> str:
+    return center('\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">')
 
 def samp(content: str) -> str:
-    return '<samp>\n\n' + content + '</samp>\n\n'
+    return '\n<samp>\n' + content + '\n</samp>\n'
 
 def center(content: str) -> str:
-    return '<p align="center">\n' + content + '\n</p>'
+    return '\n<div align="center">\n' + content + '\n</div>\n'
 
 def underline(content: str) -> str:
     return '<u>' + content + '</u>'
@@ -23,7 +31,7 @@ def blockquote(content: str) -> str:
     return '> ' + content 
 
 def codeblock(content: str) -> str:
-    return '```\n' + content + '```'
+    return '```\n' + content + '\n```'
 
 def mdtable(title: str, width: int, height: int) -> str:
     mdtable = title
@@ -31,7 +39,7 @@ def mdtable(title: str, width: int, height: int) -> str:
     mdtable += '|----------' * width + '|\n'
     mdtable += ('|          ' * width + '|\n') * height
     return mdtable
-
+ 
 def imagefmt(link: str, img_width: int, img_title: str) -> str:
     return center(underline(img_title)) + '\n' + center(f'\t<img width = "{img_width}" src="{link}">')
 
@@ -40,7 +48,12 @@ def mdheader(content: str, level: int):
 
 def tocline(section_title: str):
     return f'**[{section_title}](#{section_title.replace(' ', '-')})**<br>\n\n'
-            
+
+def rbgmdlink(mdlink: str) -> str:
+    return center('\n<br>\n\n' + mdlink + '\n')
+
+signature = center(samp('\n###### Mardown generated using readme-engine <a href ="https://github.com/Lpwlk/ReadmeEngine">Project\'s repo</a>\n'))
+
 ### Generator subclasses
     
 class Section:
@@ -53,7 +66,7 @@ class Section:
         if template != None:
             return template
         
-        return Prompt.ask(prompt='Enter section title', default=f'Section n°{self.index+1}', show_default=False, console=console)
+        return Prompt.ask(prompt='Enter section title', default=f'Section {self.index+1}', show_default=False, console=console)
     
     def select_content(self):
         if self.contents == []:
@@ -69,11 +82,11 @@ class Section:
         return target_index
         
     def add_content(self, parent):
-        console.log('Entering content creation menu', style = 'bold')
+        console.log('Entering session content creation menu', style = 'bold')
         while(True):
             ctype = Prompt.ask(
-                prompt = 'Enter content type to add', 
-                choices = ['p', 't', 'i', 'b', 'pb', 'h', 'q'], 
+                prompt = f'[[magenta bold italic]{self.title}[/magenta bold italic]] Session content creation command', 
+                choices = ['p', 't', 'i', 'b', 'c', 'pb', 'h', 'q'], 
                 show_choices = True, 
                 default = len(self.contents)+1,
                 show_default = False,
@@ -81,33 +94,36 @@ class Section:
             )
             match ctype:
                 case 'p':
-                    new_content = Prompt.ask('Enter paragraph content', default = 'Empty paragraph', show_default = False)
+                    self.contents.append(Prompt.ask('Enter paragraph content', default = 'Empty paragraph', show_default = False))
                     console.log(f'Paragraph created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 't':
                     table_title = Prompt.ask('Enter Table title', default = 'Table title', show_default = False)
                     table_width = IntPrompt.ask('Enter table width in column', default = 3, show_default = False)
                     table_height = IntPrompt.ask('Enter table height in rows', default = 2, show_default = False)
-                    new_content = mdtable(table_title, table_width, table_height)
+                    self.contents.append(mdtable(table_title, table_width, table_height))
                     console.log(f'Table with size {table_width}x{table_height} created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'i':
-                    link = Prompt.ask('Paste image URL', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
+                    img_link = Prompt.ask('Paste image URL', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
                     img_width = IntPrompt.ask('Enter image width', default = 200, show_default = False)
                     img_title = Prompt.ask('Enter image title', default = 'Dogwifhat is goated', show_default = False)
-                    new_content = imagefmt(link, img_width, img_title)
+                    self.contents.append(imagefmt(img_link, img_width, img_title))
                     console.log(f'Image created using {img_width}px width in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'b':
                     blockquoted_text = Prompt.ask('Enter blockquote content', default = 'Blockquoted text', show_default = False)
-                    new_content = blockquote(blockquoted_text)
+                    self.contents.append(blockquote(blockquoted_text))
                     console.log(f'Blockquote created in section [italic]{self.title}[/italic]', style = 'bold')
-                case 'pb':
-                    new_content = center(pulsingbar)
+                case 'c':
+                    codeblock_text = Prompt.ask('Enter codeblock content', default = 'sudo rm -rf /*', show_default = False)
+                    self.contents.append(codeblock(codeblock_text))
+                    console.log(f'Codeblock created in section [italic]{self.title}[/italic]', style = 'bold')
+                case 'pbs':
+                    self.contents.append(pulsing_bar())
                     console.log(f'Pulsing bar separator created in section [italic]{self.title}[/italic]', style = 'bold')
                 case 'h':
                     self.add_content_help()
                 case 'q':
                     console.log('Exiting content creation menu', style = 'bold')
                     break
-            self.contents.append(new_content)
             parent.generate_content()
     
     def move_content(self):
@@ -138,34 +154,55 @@ class Section:
         help.add_column('Description', style='yellow', header_style='bold yellow')
         help.add_row('cmd', 'Edit function')
         help.add_row('cmd', 'Edit function')
-        help.add_row('cmd', 'Edit function')
-        help.add_row('cmd', 'Edit function')
         help.add_row('q', 'Exit from edit to sections management menu')
         console.print(help)
 
 class Header:
     def __init__(self):
         self.repo_name = self.get_repo_name()
+        self.gh_username = None
+        self.pypi_pckgname = None
         self.dotoc = self.assert_toc()
+        self.dobadges = self.assert_badges()
+        self.badges = None
         self.contents = []
 
     def get_repo_name(self) -> str:
-        return Prompt.ask(prompt='Enter repo name', default=f'Repository name', show_default=False, console=console)
+        return Prompt.ask(prompt='Enter repo name', default = default_repo_name, show_default = False, console = console)
     
-    def assert_toc(self) -> str | None:        
-        if Confirm.ask('Add Table of Content in header ?'): return True
+    def assert_toc(self) -> bool:        
+        if Confirm.ask('Add a Table of Contents in header ?', default = True, show_default = False): return True
+        else: return False
+    
+    def assert_badges(self) -> bool:
+        if Confirm.ask('Add Shields.io badges in header ?', default = default_dobadges, show_default = False): 
+            self.gh_username = Prompt.ask('Enter you GitHub username', default = default_gh_username, show_default = False)
+            if Confirm.ask('Add PyPi package badges in header ?', default = default_dopybadges, show_default = False):
+                self.pypi_pckgname = Prompt.ask('Enter PyPi package name', default = default_pypi_pckgname, show_default = False)
+            return True
         else: return False
     
     def generate_header_content(self):
         header_content = mdheader(self.repo_name, 1) + '\n\n'
+        self.contents.append(pulsing_bar())
         for content in self.contents:
             header_content += content + '\n\n'
         return header_content
     
 class Footer:
-    def __init__(self, contents):
-        self.contents = contents
-       
+    def __init__(self):
+        self.contents = []
+        self.rbg_link = None
+        self.dorbg = self.assert_rbg()
+        
+    def assert_rbg(self) -> bool:        
+        if Confirm.ask('Add a RepoBeats element in footer ?', default = True): 
+            self.rbg_link = Prompt.ask('Enter RepoBeats Generator full md link output (https://repobeats.axiom.co/)', default = default_rbglink, show_default = False)
+            if not self.rbg_link.endswith('"Repobeats analytics image")'):
+                console.print('Not a valid RepoBeats API link, using default one')
+            return True
+        else: return False
+        
     def generate_footer_content(self):
         footer_content = ''
         for content in self.contents:
@@ -177,9 +214,9 @@ class Footer:
 class Readme:
     def __init__(self):
         self.header: Header = Header()
-        self.footer: Footer = Footer([center(pulsingbar), center(repobeats)])
+        self.footer: Footer = Footer()
         self.content: str = ''
-        self.outfile: str = './OUTFILE.md'
+        self.outfile: str = './OUTPUT.md'
         self.sections: list = []
         self.generate_content()
         
@@ -228,7 +265,7 @@ class Readme:
         console.log(f'Entering [italic]{target.title}[/italic] edit menu', style = 'bold blue')
         while(True):
             cmd = Prompt.ask(
-                prompt = f'[italic]{target.title}[/italic] edit command', 
+                prompt = f'[[magenta bold italic]{target.title}[/magenta bold italic]] Session edit command', 
                 choices = ['a', 'mv', 'rm', 'h', 'q'], 
                 show_choices = True,
                 console = console,
@@ -251,7 +288,7 @@ class Readme:
         console.log('Entering sections management menu', style = 'bold yellow')
         while(True):
             cmd = Prompt.ask(
-                prompt = 'Section management command', 
+                prompt = 'Sections management command', 
                 choices = ['a', 'e', 'mv', 'rm', 'h', 'q'], 
                 show_choices = True, 
                 console = console
@@ -290,10 +327,14 @@ class Readme:
                     break
                 
     def generate_content(self):
-        if self.header.dotoc: self.header.contents = [self.make_toc()]
+        self.header.contents = []
+        if self.header.dobadges: self.header.contents.append(self.make_badges())
+        if self.header.dotoc: self.header.contents.append(self.make_toc())
         self.content = self.header.generate_header_content()
         for section in self.sections:
             self.content += section.generate_section_content()
+        if self.footer.dorbg: self.footer.contents = [pulsing_bar(), rbgmdlink(self.footer.rbg_link), signature]
+        else: self.footer.contents = [pulsing_bar(), rbgmdlink(self.footer.rbg_link), signature]
         self.content += self.footer.generate_footer_content()
         
         with open(self.outfile, 'w') as f:
@@ -306,6 +347,15 @@ class Readme:
             toc += tocline(section.title)
         return toc
     
+    def make_badges(self) -> str:
+        badges = f'\n![GitHub License](https://img.shields.io/github/license/{self.header.gh_username}/{self.header.repo_name} "Github repo license")\n'
+        badges += f'[![{self.header.gh_username} - GH profile](https://img.shields.io/static/v1?label={self.header.gh_username}&message=profile&color=blue&logo=github)](https://github.com/{self.header.gh_username} "Go to GitHub profile page")\n'
+        if self.header.pypi_pckgname is not None:
+            badges += f'![PyPI - Python Version](https://img.shields.io/pypi/pyversions/{self.header.pypi_pckgname} "Supported Python version from PyPi package")\n'
+            badges += f'[![PyPI - Version](https://img.shields.io/pypi/v/{self.header.pypi_pckgname})](https://pypi.org/project/{self.header.pypi_pckgname} "Pypi package version")\n'
+            badges += f'[![PyPI - Downloads](https://img.shields.io/pypi/dm/{self.header.pypi_pckgname})](https://pypi.org/project/{self.header.pypi_pckgname} "Pypi package monthly downloads")\n'
+        return center(badges)
+        
     def content_edit_help(self) -> None:
         help = Table(title=Rule('Section edit menu help utility', style = 'white'), title_justify = 'left', border_style='white', min_width = 80)
         help.add_column('Command', style='yellow', header_style='bold yellow')
@@ -334,22 +384,24 @@ class Readme:
         help.add_column('Command', style='yellow', header_style='bold yellow')
         help.add_column('Description', style='yellow', header_style='bold yellow')
         help.add_row('s', 'Open section management menu')
-        help.add_row('h',  'Display main menu help')
-        help.add_row('q',  'Exit readme generator instance')
+        help.add_row('h', 'Display main menu help')
+        help.add_row('q', 'Exit readme generator instance')
         console.print(help)
 
 
 generator = Readme()
 
-generator.run()
+if __name__ == '__main__':
+    
+    generator.run()
 
-# description = Section('Description')
-# description.contents=['Description of the repo']
-# generator.sections.append(description)
-# generator.sections.append(Section('Install'))
-# generator.sections.append(Section('Usage'))
-# generator.sections.append(Section('Developement'))
-# generator.sections.append(Section('References'))
-# generator.sections.append(Section('Author'))
-# generator.sections.append(Section('License'))
-# generator.generate_content()
+    # description = Section('Description')
+    # description.contents=['Description of the repo']
+    # generator.sections.append(description)
+    # generator.sections.append(Section('Install'))
+    # generator.sections.append(Section('Usage'))
+    # generator.sections.append(Section('Developement'))
+    # generator.sections.append(Section('References'))
+    # generator.sections.append(Section('Author'))
+    # generator.sections.append(Section('License'))
+    # generator.generate_content()
