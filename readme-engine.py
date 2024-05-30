@@ -123,7 +123,7 @@ def sections_management_help() -> None:
 ### Generators objects 
     
 class Section:
-    def __init__(self, template: str = None, index: int = 0):
+    def __init__(self, index: int = 0):
         self.index = index
         self.title = Prompt.ask(prompt='[bright_blue]Enter section title[/bright_blue]', default=f'Section {self.index+1}', show_default=False, console=console)
         self.contents = []
@@ -372,7 +372,6 @@ class Readme:
         
         with open(self.outfile, 'w') as f:
             f.write(self.content)
-        # console.print(f'README.md template generated - {self.outfile}', style = ')
         
     def make_toc(self) -> str:
         toc = mdheader('Table of Contents', 3)
@@ -391,17 +390,5 @@ class Readme:
 
 generator = Readme()
 
-if __name__ == '__main__':
-    
+if __name__ == '__main__':   
     generator.run()
-
-    # description = Section('Description')
-    # description.contents=['Description of the repo']
-    # generator.sections.append(description)
-    # generator.sections.append(Section('Install'))
-    # generator.sections.append(Section('Usage'))
-    # generator.sections.append(Section('Developement'))
-    # generator.sections.append(Section('References'))
-    # generator.sections.append(Section('Author'))
-    # generator.sections.append(Section('License'))
-    # generator.generate_content()
