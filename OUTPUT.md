@@ -16,8 +16,7 @@
 
 ### Table of Contents
 
-- **[Section 1](#Section-1)**  
-- **[Section 2](#Section-2)**  
+- [Section 1](#Section-1)  
 
 
 
@@ -27,8 +26,6 @@
 
 
 ### Section 1
-
-### Section 2
 
 
 <div align="center">

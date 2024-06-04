@@ -147,7 +147,7 @@ class Section:
             choices = [str(i+1) for i in range(len(self.contents))], 
             show_choices = True, 
             default = len(self.contents),
-            show_default = False,
+            show_default = True,
             console = console
         )
         return target_index
@@ -155,12 +155,13 @@ class Section:
     def add_content(self, parent):
         while(True):
             try:
+                print(len(self.contents)+1)
                 ctype = Prompt.ask(
                     prompt = f'[{sacolor}][underline]{self.title}[/underline] add command[/{sacolor}]', 
                     choices = ['p', 't', 'l', 'b', 'c', 'i', 'pb', 'h', 'q'], 
                     show_choices = True, 
                     default = len(self.contents)+1,
-                    show_default = False,
+                    show_default = True,
                     console = console
                 )
                 match ctype:
@@ -290,7 +291,7 @@ class Readme:
     def __init__(self):
         self.header: Header = Header()
         self.footer: Footer = Footer()
-        self.content: str = ''
+        # self.content: str = ''
         self.outfile: str = './OUTPUT.md'
         self.sections: list = []
         self.generate_content()
