@@ -11,15 +11,21 @@ import copy
 from rich import inspect
 from rich.traceback import install
 import os
+import argparse
+
+parser = argparse.ArgumentParser(
+    formatter_class = argparse.RawDescriptionHelpFormatter,
+    description = ''' Debug args...''',
+    epilog = 'Author : Pawlicki Loïc\n' + '─'*30 + '\n')
+parser.add_argument('-d', '--debug', action= 'store_true')
+args = parser.parse_args()
+
+
 
 console = Console(highlight = True)
+
 install(console = console)
 
-default_repo_name = 'RepoName'
-default_dobadges = True
-default_gh_username = 'Lpwlk'
-default_dopybadges = True
-default_pypi_pckgname = 'PackageName'
 default_rbglink = '![Repobeats analytics svg](https://repobeats.axiom.co/api/embed/a9dcf7a67c680871d7836e0dc87e7950c946c8b4.svg "Repobeats analytics image")'
 
 scolor = 'white'
@@ -28,19 +34,10 @@ sacolor = 'white'
 
 sstyle = 'italic blue'
 
-# ![GitHub License](https://img.shields.io/github/license/Lpwlk/ReadmeEngine 'Github repo license')
-# [![Lpwlk - GH profile](https://img.shields.io/static/v1?label=Lpwlk&message=Author&color=blue&logo=github)](https://github.com/Lpwlk 'Go to GitHub profile page')
-# ![GitHub Tag](https://img.shields.io/github/v/tag/Lpwlk/ReadmeEngine?label=Version)
-# <!-- ![GitHub Release](https://img.shields.io/github/v/release/Lpwlk/ReadmeEngine) -->
-
-# ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/readme-engine?label=PyVersion 'Supported PyVersion from PyPi package')
-# [![PyPI - Version](https://img.shields.io/pypi/v/readme-engine?label=PyPi)](https://pypi.org/project/readme-engine 'Pypi package version')
-# [![PyPI - Downloads](https://img.shields.io/pypi/dm/readme-engine?label=Downloads)](https://pypi.org/project/readme-engine 'Pypi package monthly downloads')
-
 # Markdown rendering
 
 def pulsing_bar() -> str:
-    return center('\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">')
+    return center('\t<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">\n')
 
 def samp(content: str) -> str:
     return '\n<samp>\n' + content + '\n</samp>\n'
@@ -83,12 +80,12 @@ def mdlist() -> str:
     list, list_index = '', 0
     list_head = '\n- '
     list_type = Prompt.ask(f'[{sacolor}]Enter u/o/t for un/ordered/tickable list (Ctrl+C to end list)[/{sacolor}]', choices = ['u', 'o', 't'], default = 'u', show_default=False)
-    if list_type == 2:
+    if list_type == 't':
         list_head += '[ ] '
     try:
         while True:
             list_index += 1
-            if list_type == 1: list_head = f'\n{list_index}. '
+            if list_type == 'o': list_head = f'\n{list_index}. '
             list += list_head + Prompt.ask(f'[{sacolor}]Enter list item n°{list_index} (Ctrl+C to end list)[/{sacolor}]', default = f'List item n°{list_index}', show_default = False)
     except KeyboardInterrupt:
         print('')
@@ -105,10 +102,7 @@ def imagefmt(link: str, img_width: int, img_title: str) -> str:
     return center(underline(italic(img_title))) + '\n' + center(f'\t<img width = "{img_width}" src="{link}">')
 
 def mdheader(content: str, level: int):
-    return '#' * (level-1) + ' ' + content + '\n\n'
-
-def tocline(section_title: str):
-    return f'- [{section_title}](#{section_title.replace(' ', '-')})  \n'
+    return '#' * (level-1) + ' ' + '&nbsp;&nbsp;'*(level-2) + ' ' + content + '\n\n'
 
 def rbgmdlink(mdlink: str) -> str:
     return center('\n<br>\n\n' + mdlink + '\n')
@@ -116,6 +110,8 @@ def rbgmdlink(mdlink: str) -> str:
 signature = center(samp('\n###### Mardown file generated using <a href ="https://github.com/Lpwlk/ReadmeEngine">readme-engine</a>\n'))
 
 def main_help():
+    inspect(Section, methods = True)
+    inspect(Markdown, methods = True)
     help = Table(
         title = Rule('Main help', style = 'yellow'),
         box = rich.box.ROUNDED,
@@ -170,11 +166,19 @@ class Section:
     def __init__(self, title: str = None, content: str | list[str] | None = None, default_title: str = 'Section'):
         self.default_title = default_title
         self.title = title if title else Prompt.ask(prompt=f'[{scolor}]Enter section title[/{scolor}]', default=self.default_title, show_default=False, console=console)
-        self.content = [] if content is None else [content]
         self.subsections = []
-        print(hex(id(self.content)))
-        for sub in self.subsections:
-            print(' > ', hex(id(sub.content)))
+        self.content = self.format_content(content)
+
+    def format_content(self, content) -> list[str] | str | None:
+        if isinstance(content, list):
+            return content
+        elif isinstance(content, str):
+            return [content]
+        elif content == None:
+            return []
+        else: 
+            console.print(f'Error: Wrong section init content type ({type(content)}), content list cleared', style = 'red')
+            return []
 
     def add_section(self, subsection):
         if isinstance(subsection, Section):
@@ -194,9 +198,11 @@ class Section:
         self.parent.get_session_index(self, new = True)
         
     def generate_markdown(self, level):
-        markdown = mdheader(self.title, 1+level)
+        if level == 1:
+            markdown = center('\n'+mdheader(self.title, 1+level)+'\n')
+        else:
+            markdown = mdheader(self.title, 1+level)
         for content in self.content:
-            print(f'{self} {self.title=} {self.content=}')
             markdown += f'{content}\n\n'
         return markdown
         
@@ -206,66 +212,76 @@ class Section:
             markdown += subsection.recursive_generation(level + 1)
         return markdown
         
-    def select_content(self, prompt_text: str):
-        return None
-        
     def add_content(self):
-        # while(True):
-        try:
-            cmd = Prompt.ask(
-                prompt = f'[{secolor}][{sstyle}]{self.title}[/{sstyle}] content creation command[/{secolor}]', 
-                choices = ['p', 't', 'l', 'b', 'c', 'i', 'pb', 'h', 'q'], 
-                show_choices = True, 
-                default = 'h',
-                show_default = False,
-                console = console
-            )
-            match cmd:
-                case 'p':
-                    print(self.title)
-                    self.content.append(mdparagraph())
-                    console.print(f'Paragraph created in section [italic]{self.title}[/italic]', style = sacolor)
-                case 't':
-                    table_title = Prompt.ask(f'[{sacolor}]Enter Table title[/{sacolor}]', default = 'Table title', show_default = False)
-                    table_width = IntPrompt.ask(f'[{sacolor}]Enter table width in column[/{sacolor}]', default = 3, show_default = False)
-                    table_height = IntPrompt.ask(f'[{sacolor}]Enter table height in rows[/{sacolor}]', default = 2, show_default = False)
-                    self.content.append(mdtable(table_title, table_width, table_height))
-                    console.print(f'Table with size {table_width}x{table_height} created in section [italic]{self.title}[/italic]', style = sacolor)
-                case 'l':
-                    self.content.append(mdlist())
-                    console.print(f'List created in section [italic]{self.title}[/italic]', style = sacolor)
-                case 'b':
-                    self.content.append(blockquote())
-                    console.print(f'Blockquote created in section [italic]{self.title}[/italic]', style = sacolor)
-                case 'c':
-                    self.content.append(codeblock())
-                    console.print(f'Codeblock created in section [italic]{self.title}[/italic]', style = sacolor)
-                case 'i':
-                    img_link = Prompt.ask(f'[{sacolor}]Paste image URL[/{sacolor}]', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
-                    img_width = IntPrompt.ask(f'[{sacolor}]Enter image width[/{sacolor}]', default = 200, show_default = False)
-                    img_title = Prompt.ask(f'[{sacolor}]Enter image title[/{sacolor}]', default = 'Dogwifhat is goated', show_default = False)
-                    self.content.append(imagefmt(img_link, img_width, img_title))
-                    console.print(f'Image created using {img_width}px width in section [italic]{self.title}[/italic]', style = sacolor)
-                case 'pb':
-                    if Confirm.ask(f'[{sacolor}]Add space after separator ?[/{sacolor}]', default = False, show_default = False):
-                        self.content.append(pulsing_bar()+'<br>\n')
-                    else: 
-                        self.content.append(pulsing_bar())
-                    console.print(f'Pulsing bar separator created in section [italic]{self.title}[/italic]', style = sacolor)
-                    
-                case 'h':
-                    content_creation_help()
-                case 'q':
-                    console.print(f'Exiting [{sstyle}]{self.title}[/{sstyle}] content creation operation', style = sstyle)
-                    # break
-        except KeyboardInterrupt:
-            console.print('\nSection edit operation aborted (q exits to main menu)', style = 'red')
-    
+        cmd = Prompt.ask(
+            prompt = f'[{secolor}][{sstyle}]{self.title}[/{sstyle}] content creation command[/{secolor}]', 
+            choices = ['p', 't', 'l', 'b', 'c', 'i', 'pb', 'h', 'q'], 
+            show_choices = True, 
+            default = 'h',
+            show_default = False,
+            console = console
+        )
+        match cmd:
+            case 'p':
+                self.content.append(mdparagraph())
+                console.print(f'Paragraph created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 't':
+                table_title = Prompt.ask(f'[{sacolor}]Enter Table title[/{sacolor}]', default = 'Table title', show_default = False)
+                table_width = IntPrompt.ask(f'[{sacolor}]Enter table width in column[/{sacolor}]', default = 3, show_default = False)
+                table_height = IntPrompt.ask(f'[{sacolor}]Enter table height in rows[/{sacolor}]', default = 2, show_default = False)
+                self.content.append(mdtable(table_title, table_width, table_height))
+                console.print(f'Table with size {table_width}x{table_height} created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'l':
+                self.content.append(mdlist())
+                console.print(f'List created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'b':
+                self.content.append(blockquote())
+                console.print(f'Blockquote created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'c':
+                self.content.append(codeblock())
+                console.print(f'Codeblock created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'i':
+                img_link = Prompt.ask(f'[{sacolor}]Paste image URL[/{sacolor}]', default = 'https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', show_default = False)
+                img_width = IntPrompt.ask(f'[{sacolor}]Enter image width[/{sacolor}]', default = 200, show_default = False)
+                img_title = Prompt.ask(f'[{sacolor}]Enter image title[/{sacolor}]', default = 'Dogwifhat is goated', show_default = False)
+                self.content.append(imagefmt(img_link, img_width, img_title))
+                console.print(f'Image created using {img_width}px width in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'pb':
+                self.content.append(pulsing_bar())
+                console.print(f'Pulsing bar separator created in section [italic]{self.title}[/italic]', style = sacolor)
+            case 'h':
+                content_creation_help()
+            case 'q':
+                console.print(f'Exiting [{sstyle}]{self.title}[/{sstyle}] content creation operation', style = sstyle)
+                return True
+
     def move_content(self):
-        return None
-        
+        target = self.select_content('Select first target content index to swap', 0)
+        if target == None:
+            console.print('Error: no content created', style = 'red')
+            return None
+        swap = self.select_content('Select second target content index to swap', -1)
+        self.content[target-1], self.content[swap-1] = self.content[swap-1], self.content[target-1]
+        console.print(f'Content index {target} swapped with index {swap}', style = secolor)
+
     def remove_content(self):
-        self.content.remove(self.select_content())
+        target = self.select_content('Select target to be removed', )
+        if target == None:
+            console.print('Error: no content created', style = 'red')
+            return None
+        del self.content[target-1]
+        console.print(f'Content with index {target} removed from section instance [italic]{self.title}[/italic]', style = secolor)
+        
+    def select_content(self, prompt_text: str, default_index: int = 0):
+        if self.content == []:
+            return None
+        target_index = IntPrompt.ask(
+            prompt = prompt_text, 
+            choices = [str(i+1) for i in range(len(self.content))], show_choices = True, 
+            default = default_index, show_default = True,
+            console = console
+        )
+        return target_index
     
     def update_title(self):
         old_title = self.title
@@ -284,11 +300,15 @@ class Markdown:
     '''
     def __init__(self, filename: str | None = None):
         self.filename = filename if filename else 'RECURSIVE.md'
-        self.root = Section(title = f'{self.filename}')
-    
+        self.root = Section(title = 'README.md')
+        self.toc = True
+        
     def write_markdown(self, filename: str | None = None):
+        if self.toc: 
+            self.update_toc()
         if not filename: filename = self.filename
         content = self.root.recursive_generation(level = 1)
+        content += self.init_footer()
         with open(filename, 'w') as f:
             f.write(content)
             
@@ -297,28 +317,24 @@ class Markdown:
         if section == None: 
             section = self.root
             console.print(Rule('Current section tree', style = sstyle), width = 50)
-        if section.title is self.filename: 
+        if section.title is self.root.title: 
             nprefix = ''
         elif is_last: 
-            nprefix = '└' + '─'*branchsize + ' '
+            nprefix = f'└{'─'*branchsize} '
         else: 
-            nprefix = '├' + '─'*branchsize + ' '
-        
-        if index: index = f"[{sstyle}]{self.get_section_index(section, new=False)[:-1]}[/{sstyle}]{' ─ '*(not (section.title is self.filename))}"
+            nprefix = f'├{'─'*branchsize} '
+        if index: index = f"[{sstyle}]{self.get_section_index(section, new=False)[:-1]}[/{sstyle}] "
         else: index = ''
         console.print(prefix, nprefix, f'{index}[{sstyle}]{section.title}[/{sstyle}]', sep = '')
-        
         if not is_last: 
-            prefix += '│' + ' '*(branchsize+1)
+            prefix += f'│{' '*(branchsize+1)}'
         elif section.title is self.filename: 
             prefix += ' '
         else: 
             prefix += ' '*(branchsize+2)
-            
         for i, child in enumerate(section.subsections):
             is_last = (i == len(section.subsections)-1)
             self.sections_tree(child, prefix, is_last)
-
 
     def get_parent(self, target: Section, root: Section = None):
         if root == None: root = self.root
@@ -353,7 +369,7 @@ class Markdown:
             target = Prompt.ask(
                 prompt = f'[{scolor}]{prompt_text}[/{scolor}]', 
                 choices = [section.title for section in sections_list], show_choices = True, 
-                default = sections_list[default_index].title, show_default = True,
+                default = sections_list[default_index].title, show_default = False,
                 console = console
             )
             for section in sections_list:
@@ -375,9 +391,10 @@ class Markdown:
         target = self.select_section('Select target section to be moved')
         parent = self.get_parent(target)
         if parent is not None:
-            self.remove_section(target)
+            parent.subsections.remove(target)
+
             new_parent = self.select_section('Select new parent section')
-            new_parent.add_section(target)
+            new_parent.subsections.append(target)
             console.print(f'Section [{sstyle}]{target.title}[/{sstyle}] moved into [{sstyle}]{new_parent.title}[/{sstyle}]')
         else:
             console.print(f'Error: Root section [{sstyle}]{target.title}[/{sstyle}] can\'t be moved', style = 'red')
@@ -392,8 +409,64 @@ class Markdown:
             console.print(f'Section [{sstyle}]{target.title}[/{sstyle}] removed from [{sstyle}]{target_parent.title}[/{sstyle}]')
         else:
             console.print(f'Error: No sections created under root section [{sstyle}]{self.root.title}[/{sstyle}]', style = 'red')
-            
-            
+    
+    # Header methods 
+    
+    def init_header(self) -> None:
+        if args.debug:
+            self.root.title = 'ReadmeEngine'
+            self.root.content.append(self.make_badges(self.root.title, 'Lpwlk', 'pwlk'))
+            self.toc = True
+            self.root.content.append('Table of Contents')
+            self.root.content.append(pulsing_bar())
+        else:
+            repo_title = Prompt.ask(prompt='Enter [bold]GitHub repository name[/bold]', default = 'ReadmeEngine', show_default = False, console = console)
+            self.root.title = repo_title
+            gh_username = Prompt.ask('> Enter [bold]GitHub username[/bold]', default = 'Lpwlk', show_default = False)
+            pypi_pckg = Prompt.ask('> Enter [bold]PyPi package name[/bold]', default = 'pwlk', show_default = False)
+            if Confirm.ask('Add [bold]Shields.io badges[/bold] in header ?', default = True, show_default = False):
+                self.root.content.append(self.make_badges(self.root.title, gh_username, pypi_pckg))
+                console.print('Badges list item initialized', style = 'blue')
+            if Confirm.ask('Add [bold]Table of Contents[/bold] in header ?', default = True, show_default = False):
+                self.toc = True
+                self.root.content.append('Table of Contents')
+                console.print('Table of content item initialized', style = 'blue')
+            self.root.content.append(pulsing_bar())
+        self.write_markdown(self.filename)
+                
+    def make_badges(self, repo_name: str, gh_username: str, pypi_pckg: str) -> str:
+        badges = f'\n![GitHub license](https://img.shields.io/github/license/{gh_username}/{repo_name} "Github repo license")\n'
+        badges += f'[![GitHub profile](https://img.shields.io/static/v1?label={gh_username}&message=profile&color=blue&logo=github)](https://github.com/{gh_username} "Go to GitHub profile page")\n'
+        badges += f'[![GitHub tags](https://img.shields.io/github/v/tag/{gh_username}/{repo_name}?label=Version)](https://github.com/{gh_username}/{repo_name}/tags "Go to GitHub repo tags")\n'
+        badges += f'![PyPI - Python version](https://img.shields.io/pypi/pyversions/{pypi_pckg} "Supported Python version from PyPi package")\n'
+        badges += f'[![PyPI - Package version](https://img.shields.io/pypi/v/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Pypi package version")\n'
+        badges += f'[![PyPI - Package downloads](https://img.shields.io/pypi/dm/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Pypi package monthly downloads")\n'
+        return center(badges)
+
+    def update_toc(self):
+        toc = self.recursive_tocline(self.root)
+        for index, content in enumerate(self.root.content):
+            if 'Table of Contents' in content:
+                self.root.content[index] = toc
+
+    def recursive_tocline(self, child: Section, toc: str = '## Table of Contents\n\n', level = 0):
+        for section in child.subsections:
+            toc += f'{'&nbsp;&nbsp;&nbsp;'*level}{self.get_section_index(section, new = False)[:-1]} - [{section.title}](#{section.title.replace(' ', '-')})  \n'
+            # toc += f'{'#'*(level+5)} {'&nbsp;&nbsp;'*level}{self.get_section_index(section, new = False)[:-1]} - [{section.title}](#{section.title.replace(' ', '-')})  \n'
+            toc = self.recursive_tocline(section, toc, level + 1)
+        return toc
+    
+    def init_footer(self) -> bool:
+        if args.debug:
+            return f'\n{pulsing_bar()}\n{rbgmdlink(default_rbglink)}\n{signature}'
+        else:
+            if Confirm.ask('Add [bold]RepoBeats analytics[/bold] in footer ?', default = True, show_default=False): 
+                rbglink = Prompt.ask('> Enter [bold]RepoBeats md link[/bold] (https://repobeats.axiom.co/)', default = default_rbglink, show_default = False)
+                if not rbglink.endswith('"Repobeats analytics image")'):
+                    console.print('Not a valid RepoBeats API link, using default one')
+                return f'\n{pulsing_bar()}\n{rbgmdlink(rbglink)}\n{signature}'
+
+    
     def edit_section(self):
         target = self.select_section('Select target session to edit', default_index = -1)
         try:
@@ -406,7 +479,15 @@ class Markdown:
                 )
                 match cmd:
                     case 'a':
-                        target.add_content()
+                        try:
+                            while True:
+                                if target.add_content():
+                                    break
+                                else:
+                                    self.write_markdown()
+                        except KeyboardInterrupt:
+                            console.print('\n[underline bold]KeyboardInterrupt[/underline bold] > Content creation operation aborted (q exits to main menu)', style = 'red')
+    
                     case 'mv':
                         target.move_content()
                     case 'rm':
@@ -422,8 +503,9 @@ class Markdown:
         except KeyboardInterrupt:
             console.print('\n[underline bold]KeyboardInterrupt[/underline bold] > Section edit operation aborted (q exits to main menu)', style = 'red')
 
-            
+
     def run(self):
+        self.init_header()
         try: # remember to switch increment w/ while loop to prevent from exiting script via Ctrl+C (q cmd for this instead)
             while True:
                 cmd = Prompt.ask(
@@ -460,7 +542,7 @@ if __name__ == '__main__':
 
     # Templated section
 
-    console.print(Rule('Templated README.md generation test', style = 'bold green'), '\n')
+    console.print(Rule('Templated README.md generation test', style = 'bold green'))
     templated_outfile = 'TEMPLATED.md'
 
     md = Markdown(templated_outfile)
@@ -496,11 +578,11 @@ if __name__ == '__main__':
     console.print(Rule('Printing recursive section names as [underline bold]tree[/underline bold] ...', style = 'yellow'), width = 100)
     md.sections_tree(index = True)
 
-    console.print('\n', Rule(f'Templated README.md version generated @ {templated_outfile}', style = 'green'))
+    console.print(Rule(f'Templated README.md version generated @ {templated_outfile}', style = 'green'))
 
     ### Interactive section
 
-    console.print('\n', Rule('Switching to interactive markdown generation test', style = 'blue'), '\n')
+    console.print('\n', Rule('Switching to interactive markdown generation test', style = 'blue'))
 
     interactive_outfile = 'INTERACTIVE.md'
     cli_md = Markdown(interactive_outfile)
