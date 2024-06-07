@@ -22,10 +22,7 @@
 
 **[Usage](#Usage)**<br>
 
-**[Coming next](#Coming-next)**<br>
-
-
-
+**[Roadmap](#Roadmap)**<br>
 
 <div align="center">
 	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
@@ -50,14 +47,14 @@ pip install readme-engine
 
 The tool is designed using a tree structure for sections and section's contents. Every element (Section or content) can me moved/edited or removed using commands and help utilities are available for every menu.
 
-### Coming next
+### Roadmap
 
-List generation option in content creation
-
-User-friendly CLI output
-
-Complete coverage of flavoured markdown syntax
-
+- [x] Update .gitignore & clean repo before next commit
+- [ ] Implementation of InlinePrompts for sections-dependant commands (using format: >'a title' to add section foo instead of >'a' >'title')
+- [ ] Full command coverage test w/ .svg output generation for CLI rendering validation alongside
+- [ ] Add block-comments under major methods of both Markdown & Section objects
+- [ ] Define clear styles names for each contexts & specific elements
+- [ ] Include/update styles in every console outputs
 
 <div align="center">
 	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">

@@ -1,0 +1,132 @@
+╭───────────────────────── <class 'rich.console.Console'> ─────────────────────────╮
+│ A high level console interface.                                                  │
+│                                                                                  │
+│ ╭──────────────────────────────────────────────────────────────────────────────╮ │
+│ │ <console width=232 ColorSystem.TRUECOLOR>                                    │ │
+│ ╰──────────────────────────────────────────────────────────────────────────────╯ │
+│                                                                                  │
+│     color_system = 'truecolor'                                                   │
+│         encoding = 'utf-8'                                                       │
+│             file = <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'> │
+│           height = 19                                                            │
+│    is_alt_screen = False                                                         │
+│ is_dumb_terminal = False                                                         │
+│   is_interactive = True                                                          │
+│       is_jupyter = False                                                         │
+│      is_terminal = True                                                          │
+│   legacy_windows = False                                                         │
+│         no_color = False                                                         │
+│          options = ConsoleOptions(                                               │
+│                        size=ConsoleDimensions(width=232, height=19),             │
+│                        legacy_windows=False,                                     │
+│                        min_width=1,                                              │
+│                        max_width=232,                                            │
+│                        is_terminal=True,                                         │
+│                        encoding='utf-8',                                         │
+│                        max_height=19,                                            │
+│                        justify=None,                                             │
+│                        overflow=None,                                            │
+│                        no_wrap=False,                                            │
+│                        highlight=None,                                           │
+│                        markup=None,                                              │
+│                        height=None                                               │
+│                    )                                                             │
+│            quiet = False                                                         │
+│           record = True                                                          │
+│         safe_box = True                                                          │
+│             size = ConsoleDimensions(width=232, height=19)                       │
+│        soft_wrap = False                                                         │
+│           stderr = False                                                         │
+│            style = None                                                          │
+│         tab_size = 8                                                             │
+│            width = 232                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Item              │ Value                                                                                            │
+├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ prompt.choices    │ Style(color=Color('blue', ColorType.STANDARD, number=4), italic=True)                            │
+│ prompt.default    │ Style(color=Color('yellow', ColorType.STANDARD, number=3), bold=True, blink=True)                │
+╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Item              │ Value                                                                                            │
+├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ prompt.choices    │ Style(color=Color('green', ColorType.STANDARD, number=2), italic=True)                           │
+│ prompt.default    │ Style(color=Color('yellow', ColorType.STANDARD, number=3), bold=True, blink=True)                │
+╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Item              │ Value                                                                                            │
+├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ prompt.choices    │ Style(color=Color('yellow', ColorType.STANDARD, number=3), italic=True)                          │
+│ prompt.default    │ Style(color=Color('yellow', ColorType.STANDARD, number=3), bold=True, blink=True)                │
+╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
+───────────────────────────────────────────────────────────────────────────────────────────────── Templated README.md generation test ──────────────────────────────────────────────────────────────────────────────────────────────────
+README.md
+─────────────────── Generating readme structure using hard-coded statements ... ────────────────────
+Chapter 1
+Section Chapter 1 created in README.md
+Chapter 2
+Section Chapter 2 created in README.md
+Chapter 1.1
+Chapter 1.1.1
+Section Chapter 1.1.1 created in Chapter 1.1
+Chapter 1.1.2
+Section Chapter 1.1.2 created in Chapter 1.1
+Section Chapter 1.1 created in Chapter 1
+Chapter 1.2
+Section Chapter 1.2 created in Chapter 1
+Chapter 2.1
+Chapter 2.1.1
+Section Chapter 2.1.1 created in Chapter 2.1
+Chapter 2.1.1.1
+Section Chapter 2.1.1.1 created in Chapter 2.1.1
+Section Chapter 2.1 created in Chapter 2
+─────────────────────────── Printing recursive section names as list ... ───────────────────────────
+README.md
+Chapter 1
+Chapter 1.1
+Chapter 1.1.1
+Chapter 1.1.2
+Chapter 1.2
+Chapter 2
+Chapter 2.1
+Chapter 2.1.1
+Chapter 2.1.1.1
+─────────────────────────── Printing recursive section names as tree ... ───────────────────────────
+────────────── Current section tree ──────────────
+ README.md
+    ├── 1 Chapter 1
+    │   ├── 1.1 Chapter 1.1
+    │   │   ├── 1.1.1 Chapter 1.1.1
+    │   │   └── 1.1.2 Chapter 1.1.2
+    │   └── 1.2 Chapter 1.2
+    └── 2 Chapter 2
+        └── 2.1 Chapter 2.1
+            └── 2.1.1 Chapter 2.1.1
+                └── 2.1.1.1 Chapter 2.1.1.1
+───────────────────────────────────────────────────────────────────────────────────────── Templated README.md version generated @ TEMPLATED.md ─────────────────────────────────────────────────────────────────────────────────────────
+
+
+────────────────────────────────────────────────────────────────────────────────────────── Switching to interactive markdown generation test ───────────────────────────────────────────────────────────────────────────────────────────
+README.md
+Sections management command [a/e/mv/rm/tree/temp/i/h/q]: a
+Select parent session title [README.md]: README.md
+Enter section title: 1
+Section 1 created in README.md
+Sections management command [a/e/mv/rm/tree/temp/i/h/q]: e
+Select target session to edit [README.md/1]: 1
+1 edit command [a/mv/rm/rn/up/i/h/q]: Please select one of the available options
+1 edit command [a/mv/rm/rn/up/i/h/q]: a
+1 content creation command [p/t/l/b/c/i/pb/h/q]: t
+Enter Table title: Table title
+Enter table width in column: 3
+Enter table height in rows: 2
+Table with size 3x2 created in section 1
+1 content creation command [p/t/l/b/c/i/pb/h/q]: q
+Exiting 1 content creation operation
+1 edit command [a/mv/rm/rn/up/i/h/q]: q
+Exiting 1 edit operation
+Sections management command [a/e/mv/rm/tree/temp/i/h/q]: q
+Exiting interactive INTERACTIVE.md generation
+
+
+────────────────────────────────────────────────────────────────────────────────────── Interactive README.md version generated @ INTERACTIVE.md! ───────────────────────────────────────────────────────────────────────────────────────
