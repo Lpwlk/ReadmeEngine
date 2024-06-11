@@ -40,7 +40,7 @@
 
 
 <div align="center">
-	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">&nbsp;
+	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">
 </div>
 
 
@@ -49,27 +49,28 @@
 
 This Python tool has been designed to generate (flavoured) markdown files for GitHub repositories. It includes basic badges and RepoBeats generation options as well as multiple basic integrated methods to render markdown elements inside recursive section objects.
 
+It can be useful to kickstart personal projects as it includes templating options via Mardown & Section objects methods calls.
+
+Moreover, a wide range of flavoured markdown (GitHub Markdown) features are supported by the templated-compatible interactive mode commands. 
+
 
 <div align="center">
 	<u><i>ReadmeEngine CLI features</i></u>
 </div>
 
-
 <div align="center">
 	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
 </div>
 
-
-
-It can be very useful for personnal projects kickstart as it includes templating options via Mardown & Section objects method calls inside a personnal script and it fits minimum templating requirements for most imaginable projects.
+> Note that some commands only generate a "base of content". Thus, generated content (example: custom-size table) may have to be updated after interactive mode.
 
 ## &nbsp;&nbsp; Installation
 
 ### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Prerequisites
 
-Required software (Python version, specific dependencies).
+The package was written on Python 3.12 version but supported versions will be determined when the package will be released on PyPi. 
 
-The package was written on Python 3.12 version but supported versions will be determined when the package will be released on PyPi.
+This section will be updated accordingly with the first PyPi realease.
 
 ### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Instructions
 
@@ -148,12 +149,12 @@ The ideal use of this tool would be to design your own base template for some of
 import readme-engine
 
 md = Markdown()
-md.add_section(Section(title = 'Description', content = ['Project description.'])
+md.add_section(Section(title = 'Description', content = ['Project description.']))
 md.add_section(Section(title = 'Installation'))
 usage = Section('Usage')
 usage.add_section(Section('Best practices'))
 md.add_section(usage)
-sudo rm -rf /*
+
 md.run() # Calling interactive mode on Markdown object to edit previous template
 ```
 
@@ -170,20 +171,21 @@ The /tests directory includes rich-generated .svg files of terminal output of th
 ## &nbsp;&nbsp; Roadmap
 
 
-- [ ] Update .gitignore & clean repo before next commit
-- [ ] Implementation of one-line prompts for section selects [canceled because not efficient]
-- [ ] Implement details tag option for foldable content creation in content creation mode
-- [ ] Full command coverage test w/ .svg output generation for CLI rendering validation alongside
+- [x] Update .gitignore & clean repo before next commit
+- [x] Implementation of one-line prompts for section selects [canceled because not efficient]
+- [x] Implement details tag option for foldable content creation in content creation mode
+- [x] Full command coverage test w/ .svg output generation for CLI rendering validation alongside
 - [ ] Add block-comments under major methods of both Markdown & Section objects
-- [ ] Define clear styles names for each contexts & specific elements
-- [ ] Include/update styles in every console outputs
-- [ ] Define & update external methods availability for external templating use
-- [ ] Write unit tests for every methods externally available in /tests
+- [x] Define clear styles names for each contexts & specific elements
+- [x] Include/update styles in every console outputs
+- [ ] Define external methods availability for external templating use & update accordingly
 - [ ] Reference every available methods for the end-user w/ descrition in Usage > Templating
+- [ ] Write unit tests for every methods externally available in /tests
+
 
 ## &nbsp;&nbsp; Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change and in which way you would like to to it.
+Pull requests are welcome. For major changes, please fell free to open an issue first to discuss what you would like to change and in which way you would like to to it.
 
 ## &nbsp;&nbsp; License
 
