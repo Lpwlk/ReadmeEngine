@@ -2,7 +2,7 @@
 <div align="center">
 
 
-# ReadmeEngine
+#  ReadmeEngine
 
 
 
@@ -23,7 +23,8 @@
 
 ## Table of Contents
 
-1 - [1](#1)  
+1 - [Description](#Description)  
+&nbsp;&nbsp;&nbsp;1.1 - [Subsection renamed](#Subsection-renamed)  
 
 
 
@@ -33,13 +34,70 @@
 
 
 
-##&nbsp;&nbsp;  1
+## &nbsp;&nbsp; Description
 
-Table title
+### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Subsection renamed
+
+<details>
+
+  <summary>
+
+ ##### This is a foldable section (closed by default because specified)
+
+  </summary>
+
+  
+- Unordered list item
+- List item n°2
+
+  
+1. Ordered list item
+2. List item n°2
+
+  
+- [ ] Tickable list item
+- [ ] List item n°2
+
+</details>
+
+Empty markdown table [Updated via cli]
 |  Column  |  Column  |  Column  |
 |----------|----------|----------|
 |          |          |          |
 |          |          |          |
+|          |          |          |
+
+
+
+<div align="center">
+	<img src="https://github.com/Lpwlk/Lpwlk/blob/main/assets/pulsing-bar.gif?raw=true">&nbsp;
+</div>
+
+
+
+This paragraph has been generated using ReadmeEngine.py
+
+```
+sudo rm -rf /*
+(don't do it kids)
+```
+
+
+> Blockquoted text (line1)
+> 
+> Second blockquoted line
+
+
+
+<div align="center">
+	<u><i>Dogwifhat is goated</i></u>
+</div>
+
+
+<div align="center">
+	<img width = "150" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
+</div>
+
 
 
 

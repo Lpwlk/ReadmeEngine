@@ -3,29 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <style>
-.r1 {color: #000080; text-decoration-color: #000080}
-.r2 {color: #000080; text-decoration-color: #000080; font-weight: bold}
-.r3 {color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold}
-.r4 {color: #000000; text-decoration-color: #000000}
-.r5 {color: #008000; text-decoration-color: #008000}
-.r6 {color: #008080; text-decoration-color: #008080}
-.r7 {font-weight: bold}
-.r8 {color: #808000; text-decoration-color: #808000}
-.r9 {color: #008080; text-decoration-color: #008080; font-weight: bold}
-.r10 {color: #808000; text-decoration-color: #808000; font-style: italic}
-.r11 {color: #ff0000; text-decoration-color: #ff0000; font-style: italic}
-.r12 {color: #00ff00; text-decoration-color: #00ff00; font-style: italic}
-.r13 {color: #800080; text-decoration-color: #800080; font-weight: bold}
-.r14 {color: #800080; text-decoration-color: #800080; font-style: italic}
-.r15 {color: #008000; text-decoration-color: #008000; font-weight: bold}
-.r16 {font-weight: bold; text-decoration: underline}
-.r17 {color: #000000; text-decoration-color: #000000; text-decoration: underline}
-.r18 {color: #000000; text-decoration-color: #000000; font-weight: bold; text-decoration: underline}
-.r19 {color: #00ff00; text-decoration-color: #00ff00; font-weight: bold}
-.r20 {color: #000080; text-decoration-color: #000080; font-style: italic}
-.r21 {color: #008000; text-decoration-color: #008000; font-style: italic}
-.r22 {color: #800000; text-decoration-color: #800000}
-.r23 {color: #008080; text-decoration-color: #008080; font-weight: bold; font-style: italic}
+.r1 {color: #008000; text-decoration-color: #008000; font-weight: bold}
+.r2 {color: #808000; text-decoration-color: #808000}
+.r3 {font-weight: bold; text-decoration: underline}
+.r4 {color: #000080; text-decoration-color: #000080; font-style: italic}
+.r5 {color: #000080; text-decoration-color: #000080; font-weight: bold; font-style: italic}
+.r6 {color: #00ff00; text-decoration-color: #00ff00}
+.r7 {color: #008000; text-decoration-color: #008000}
+.r8 {color: #808000; text-decoration-color: #808000; font-weight: bold}
+.r9 {color: #008000; text-decoration-color: #008000; font-style: italic}
+.r10 {color: #ffaf00; text-decoration-color: #ffaf00; font-weight: bold; text-decoration: underline}
+.r11 {color: #ffaf00; text-decoration-color: #ffaf00}
+.r12 {color: #800000; text-decoration-color: #800000; font-weight: bold; text-decoration: underline}
+.r13 {color: #800000; text-decoration-color: #800000}
 body {
     color: #000000;
     background-color: #ffffff;
@@ -33,138 +23,96 @@ body {
 </style>
 </head>
 <body>
-    <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><code style="font-family:inherit"><span class="r1">╭───────────────────────── </span><span class="r2">&lt;</span><span class="r3">class</span><span class="r4"> </span><span class="r5">&#x27;rich.console.Console&#x27;</span><span class="r2">&gt;</span><span class="r1"> ─────────────────────────╮</span>
-<span class="r1">│</span> <span class="r6">A high level console interface.</span>                                                  <span class="r1">│</span>
-<span class="r1">│</span>                                                                                  <span class="r1">│</span>
-<span class="r1">│</span> <span class="r5">╭──────────────────────────────────────────────────────────────────────────────╮</span> <span class="r1">│</span>
-<span class="r1">│</span> <span class="r5">│</span> <span class="r7">&lt;</span><span class="r3">console</span><span class="r4"> </span><span class="r8">width</span><span class="r4">=</span><span class="r9">232</span><span class="r4"> ColorSystem.TRUECOLOR</span><span class="r7">&gt;</span>                                    <span class="r5">│</span> <span class="r1">│</span>
-<span class="r1">│</span> <span class="r5">╰──────────────────────────────────────────────────────────────────────────────╯</span> <span class="r1">│</span>
-<span class="r1">│</span>                                                                                  <span class="r1">│</span>
-<span class="r1">│</span>     <span class="r10">color_system</span> = <span class="r5">&#x27;truecolor&#x27;</span>                                                   <span class="r1">│</span>
-<span class="r1">│</span>         <span class="r10">encoding</span> = <span class="r5">&#x27;utf-8&#x27;</span>                                                       <span class="r1">│</span>
-<span class="r1">│</span>             <span class="r10">file</span> = <span class="r7">&lt;</span><span class="r3">_io.TextIOWrapper</span><span class="r4"> </span><span class="r8">name</span><span class="r4">=</span><span class="r5">&#x27;&lt;stdout&gt;&#x27;</span><span class="r4"> </span><span class="r8">mode</span><span class="r4">=</span><span class="r5">&#x27;w&#x27;</span><span class="r4"> </span><span class="r8">encoding</span><span class="r4">=</span><span class="r5">&#x27;utf-8&#x27;</span><span class="r7">&gt;</span> <span class="r1">│</span>
-<span class="r1">│</span>           <span class="r10">height</span> = <span class="r9">19</span>                                                            <span class="r1">│</span>
-<span class="r1">│</span>    <span class="r10">is_alt_screen</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span> <span class="r10">is_dumb_terminal</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>   <span class="r10">is_interactive</span> = <span class="r12">True</span>                                                          <span class="r1">│</span>
-<span class="r1">│</span>       <span class="r10">is_jupyter</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>      <span class="r10">is_terminal</span> = <span class="r12">True</span>                                                          <span class="r1">│</span>
-<span class="r1">│</span>   <span class="r10">legacy_windows</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>         <span class="r10">no_color</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>          <span class="r10">options</span> = <span class="r13">ConsoleOptions</span><span class="r7">(</span>                                               <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">size</span>=<span class="r13">ConsoleDimensions</span><span class="r7">(</span><span class="r8">width</span>=<span class="r9">232</span>, <span class="r8">height</span>=<span class="r9">19</span><span class="r7">)</span>,             <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">legacy_windows</span>=<span class="r11">False</span>,                                     <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">min_width</span>=<span class="r9">1</span>,                                              <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">max_width</span>=<span class="r9">232</span>,                                            <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">is_terminal</span>=<span class="r12">True</span>,                                         <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">encoding</span>=<span class="r5">&#x27;utf-8&#x27;</span>,                                         <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">max_height</span>=<span class="r9">19</span>,                                            <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">justify</span>=<span class="r14">None</span>,                                             <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">overflow</span>=<span class="r14">None</span>,                                            <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">no_wrap</span>=<span class="r11">False</span>,                                            <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">highlight</span>=<span class="r14">None</span>,                                           <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">markup</span>=<span class="r14">None</span>,                                              <span class="r1">│</span>
-<span class="r1">│</span>                        <span class="r8">height</span>=<span class="r14">None</span>                                               <span class="r1">│</span>
-<span class="r1">│</span>                    <span class="r7">)</span>                                                             <span class="r1">│</span>
-<span class="r1">│</span>            <span class="r10">quiet</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>           <span class="r10">record</span> = <span class="r12">True</span>                                                          <span class="r1">│</span>
-<span class="r1">│</span>         <span class="r10">safe_box</span> = <span class="r12">True</span>                                                          <span class="r1">│</span>
-<span class="r1">│</span>             <span class="r10">size</span> = <span class="r13">ConsoleDimensions</span><span class="r7">(</span><span class="r8">width</span>=<span class="r9">232</span>, <span class="r8">height</span>=<span class="r9">19</span><span class="r7">)</span>                       <span class="r1">│</span>
-<span class="r1">│</span>        <span class="r10">soft_wrap</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>           <span class="r10">stderr</span> = <span class="r11">False</span>                                                         <span class="r1">│</span>
-<span class="r1">│</span>            <span class="r10">style</span> = <span class="r14">None</span>                                                          <span class="r1">│</span>
-<span class="r1">│</span>         <span class="r10">tab_size</span> = <span class="r9">8</span>                                                             <span class="r1">│</span>
-<span class="r1">│</span>            <span class="r10">width</span> = <span class="r9">232</span>                                                           <span class="r1">│</span>
-<span class="r1">╰──────────────────────────────────────────────────────────────────────────────────╯</span>
-╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
-│<span class="r7"> Item              </span>│<span class="r7"> Value                                                                                            </span>│
-├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ prompt.choices    │ Style(color=Color(&#x27;blue&#x27;, ColorType.STANDARD, number=4), italic=True)                            │
-│ prompt.default    │ Style(color=Color(&#x27;yellow&#x27;, ColorType.STANDARD, number=3), bold=True, blink=True)                │
-╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
-│<span class="r7"> Item              </span>│<span class="r7"> Value                                                                                            </span>│
-├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ prompt.choices    │ Style(color=Color(&#x27;green&#x27;, ColorType.STANDARD, number=2), italic=True)                           │
-│ prompt.default    │ Style(color=Color(&#x27;yellow&#x27;, ColorType.STANDARD, number=3), bold=True, blink=True)                │
-╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭───────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────╮
-│<span class="r7"> Item              </span>│<span class="r7"> Value                                                                                            </span>│
-├───────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ prompt.choices    │ Style(color=Color(&#x27;yellow&#x27;, ColorType.STANDARD, number=3), italic=True)                          │
-│ prompt.default    │ Style(color=Color(&#x27;yellow&#x27;, ColorType.STANDARD, number=3), bold=True, blink=True)                │
-╰───────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────╯
-<span class="r15">───────────────────────────────────────────────────────────────────────────────────────────────── </span>Templated README.md generation test<span class="r15"> ──────────────────────────────────────────────────────────────────────────────────────────────────</span>
-README.md
-<span class="r8">─────────────────── </span>Generating readme structure using <span class="r16">hard-coded statements</span> <span class="r8">... ────────────────────</span>
-Chapter <span class="r9">1</span>
-Section <span class="r17">Chapter </span><span class="r18">1</span> created in <span class="r17">README.md</span>
-Chapter <span class="r9">2</span>
-Section <span class="r17">Chapter </span><span class="r18">2</span> created in <span class="r17">README.md</span>
-Chapter <span class="r9">1.1</span>
-Chapter <span class="r9">1.1</span>.<span class="r9">1</span>
-Section <span class="r17">Chapter </span><span class="r18">1.1</span><span class="r17">.</span><span class="r18">1</span> created in <span class="r17">Chapter </span><span class="r18">1.1</span>
-Chapter <span class="r9">1.1</span>.<span class="r9">2</span>
-Section <span class="r17">Chapter </span><span class="r18">1.1</span><span class="r17">.</span><span class="r18">2</span> created in <span class="r17">Chapter </span><span class="r18">1.1</span>
-Section <span class="r17">Chapter </span><span class="r18">1.1</span> created in <span class="r17">Chapter </span><span class="r18">1</span>
-Chapter <span class="r9">1.2</span>
-Section <span class="r17">Chapter </span><span class="r18">1.2</span> created in <span class="r17">Chapter </span><span class="r18">1</span>
-Chapter <span class="r9">2.1</span>
-Chapter <span class="r9">2.1</span>.<span class="r9">1</span>
-Section <span class="r17">Chapter </span><span class="r18">2.1</span><span class="r17">.</span><span class="r18">1</span> created in <span class="r17">Chapter </span><span class="r18">2.1</span>
-Chapter <span class="r19">2.1.1.1</span>
-Section <span class="r17">Chapter </span><span class="r18">2.1.1.1</span> created in <span class="r17">Chapter </span><span class="r18">2.1</span><span class="r17">.</span><span class="r18">1</span>
-Section <span class="r17">Chapter </span><span class="r18">2.1</span> created in <span class="r17">Chapter </span><span class="r18">2</span>
-<span class="r8">─────────────────────────── </span>Printing recursive section names as <span class="r16">list</span> <span class="r8">... ───────────────────────────</span>
-README.md
-Chapter <span class="r9">1</span>
-Chapter <span class="r9">1.1</span>
-Chapter <span class="r9">1.1</span>.<span class="r9">1</span>
-Chapter <span class="r9">1.1</span>.<span class="r9">2</span>
-Chapter <span class="r9">1.2</span>
-Chapter <span class="r9">2</span>
-Chapter <span class="r9">2.1</span>
-Chapter <span class="r9">2.1</span>.<span class="r9">1</span>
-Chapter <span class="r19">2.1.1.1</span>
-<span class="r8">─────────────────────────── </span>Printing recursive section names as <span class="r16">tree</span> <span class="r8">... ───────────────────────────</span>
-<span class="r17">────────────── </span>Current section tree<span class="r17"> ──────────────</span>
- <span class="r17">README.md</span>
-    ├── <span class="r18">1</span> <span class="r17">Chapter </span><span class="r18">1</span>
-    │   ├── <span class="r18">1.1</span> <span class="r17">Chapter </span><span class="r18">1.1</span>
-    │   │   ├── <span class="r18">1.1</span><span class="r17">.</span><span class="r18">1</span> <span class="r17">Chapter </span><span class="r18">1.1</span><span class="r17">.</span><span class="r18">1</span>
-    │   │   └── <span class="r18">1.1</span><span class="r17">.</span><span class="r18">2</span> <span class="r17">Chapter </span><span class="r18">1.1</span><span class="r17">.</span><span class="r18">2</span>
-    │   └── <span class="r18">1.2</span> <span class="r17">Chapter </span><span class="r18">1.2</span>
-    └── <span class="r18">2</span> <span class="r17">Chapter </span><span class="r18">2</span>
-        └── <span class="r18">2.1</span> <span class="r17">Chapter </span><span class="r18">2.1</span>
-            └── <span class="r18">2.1</span><span class="r17">.</span><span class="r18">1</span> <span class="r17">Chapter </span><span class="r18">2.1</span><span class="r17">.</span><span class="r18">1</span>
-                └── <span class="r18">2.1.1.1</span> <span class="r17">Chapter </span><span class="r18">2.1.1.1</span>
-<span class="r5">───────────────────────────────────────────────────────────────────────────────────────── </span>Templated README.md version generated @ TEMPLATED.md<span class="r5"> ─────────────────────────────────────────────────────────────────────────────────────────</span>
+    <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><code style="font-family:inherit"><span class="r1">───────────────────────────────────────── </span>Templated README.md generation test<span class="r1"> ──────────────────────────────────────────</span>
+<span class="r2">─────────────────── </span>Generating readme structure using <span class="r3">hard-coded statements</span> <span class="r2">... ────────────────────</span>
+Section <span class="r4">Chapter </span><span class="r5">1</span> created in <span class="r4">root</span>
+Section <span class="r4">Chapter </span><span class="r5">2</span> created in <span class="r4">root</span>
+Section <span class="r4">Chapter </span><span class="r5">1.1</span><span class="r4">.</span><span class="r5">1</span> created in <span class="r4">Chapter </span><span class="r5">1.1</span>
+Section <span class="r4">Chapter </span><span class="r5">1.1</span><span class="r4">.</span><span class="r5">2</span> created in <span class="r4">Chapter </span><span class="r5">1.1</span>
+Section <span class="r4">Chapter </span><span class="r5">1.1</span> created in <span class="r4">Chapter </span><span class="r5">1</span>
+Section <span class="r4">Chapter </span><span class="r5">1.2</span> created in <span class="r4">Chapter </span><span class="r5">1</span>
+<span class="r2">─────────────────────────── </span>Printing recursive section names as <span class="r3">tree</span> <span class="r2">... ───────────────────────────</span>
+<span class="r6">────────────────── </span>Current <span class="r4">root</span>&#x27;s subsections tree<span class="r6"> ───────────────────</span>
+root
+ ├─ <span class="r1">1</span> Chapter <span class="r1">1</span>
+ │  ├─ <span class="r1">1.1</span> Chapter <span class="r1">1.1</span>
+ │  │  ├─ <span class="r1">1.1</span>.<span class="r1">1</span> Chapter <span class="r1">1.1</span>.<span class="r1">1</span>
+ │  │  └─ <span class="r1">1.1</span>.<span class="r1">2</span> Chapter <span class="r1">1.1</span>.<span class="r1">2</span>
+ │  └─ <span class="r1">1.2</span> Chapter <span class="r1">1.2</span>
+ └─ <span class="r1">2</span> Chapter <span class="r1">2</span>
+<span class="r7">───────────────────────────────── </span>Templated README.md version generated @ TEMPLATED.md<span class="r7"> ─────────────────────────────────</span>
 
 
-<span class="r1">────────────────────────────────────────────────────────────────────────────────────────── </span>Switching to interactive markdown generation test<span class="r1"> ───────────────────────────────────────────────────────────────────────────────────────────</span>
-README.md
-<span class="r4">Sections management command</span> <span class="r20">[a/e/mv/rm/tree/temp/i/h/q]</span>: a
-<span class="r4">Select parent session title</span> <span class="r20">[README.md]</span>: README.md
-<span class="r4">Enter section title</span>: <span class="r9">1</span>
-Section <span class="r18">1</span> created in <span class="r17">README.md</span>
-<span class="r4">Sections management command</span> <span class="r20">[a/e/mv/rm/tree/temp/i/h/q]</span>: e
-<span class="r4">Select target session to edit</span> <span class="r21">[README.md/1]</span>: <span class="r9">1</span>
-<span class="r17">1</span><span class="r4"> edit command</span> <span class="r21">[a/mv/rm/rn/up/i/h/q]</span>: <span class="r22">Please select one of the available options</span>
-<span class="r17">1</span><span class="r4"> edit command</span> <span class="r21">[a/mv/rm/rn/up/i/h/q]</span>: a
-<span class="r17">1</span><span class="r4"> content creation command</span> <span class="r10">[p/t/l/b/c/i/pb/h/q]</span>: t
-<span class="r4">Enter Table title</span>: Table title
-<span class="r4">Enter table width in column</span>: <span class="r9">3</span>
-<span class="r4">Enter table height in rows</span>: <span class="r9">2</span>
-<span class="r4">Table with size 3x2 created in section </span><span class="r23">1</span>
-<span class="r17">1</span><span class="r4"> content creation command</span> <span class="r10">[p/t/l/b/c/i/pb/h/q]</span>: q
-<span class="r17">Exiting </span><span class="r18">1</span><span class="r17"> content creation operation</span>
-<span class="r17">1</span><span class="r4"> edit command</span> <span class="r10">[a/mv/rm/rn/up/i/h/q]</span>: q
-<span class="r1">Exiting </span><span class="r18">1</span><span class="r1"> edit operation</span>
-<span class="r4">Sections management command</span> <span class="r10">[a/e/mv/rm/tree/temp/i/h/q]</span>: q
-<span class="r1">Exiting interactive INTERACTIVE.md generation</span>
+<span class="r6">────────────────────────────────── </span>Switching to interactive markdown generation test<span class="r6"> ───────────────────────────────────</span>
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: tree
+<span class="r6">────────────────── </span>Current <span class="r4">root</span>&#x27;s subsections tree<span class="r6"> ───────────────────</span>
+root
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: temp
+Section <span class="r4">Prerequisites</span> created in <span class="r4">Installation</span>
+Section <span class="r4">Instructions</span> created in <span class="r4">Installation</span>
+Section <span class="r4">Basic Usage</span> created in <span class="r4">Usage</span>
+Section <span class="r4">Configuration</span> created in <span class="r4">Usage</span>
+Section <span class="r4">Command-Line Interface</span> created in <span class="r4">Usage</span>
+Section <span class="r4">Milestones</span> created in <span class="r4">Roadmap</span>
+Section <span class="r4">Mode </span><span class="r5">1</span> created in <span class="r4">Examples</span>
+Section <span class="r4">Mode </span><span class="r5">2</span> created in <span class="r4">Examples</span>
+Enter template type to call for root <span class="r4">[d/m]</span>: m
+Minimal template generated: overriding current root sections for the following structure <span class="r2">...</span>
+<span class="r6">────────────────── </span>Current <span class="r4">root</span>&#x27;s subsections tree<span class="r6"> ───────────────────</span>
+root
+ ├─ <span class="r1">1</span> Description
+ ├─ <span class="r1">2</span> Installation
+ │  ├─ <span class="r1">2.1</span> Prerequisites
+ │  └─ <span class="r1">2.2</span> Instructions
+ ├─ <span class="r1">3</span> Usage
+ │  ├─ <span class="r1">3.1</span> Basic Usage
+ │  ├─ <span class="r1">3.2</span> Configuration
+ │  └─ <span class="r1">3.3</span> Command-Line Interface
+ └─ <span class="r1">4</span> License
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: tree
+<span class="r6">────────────────── </span>Current <span class="r4">root</span>&#x27;s subsections tree<span class="r6"> ───────────────────</span>
+root
+ ├─ <span class="r1">1</span> Description
+ ├─ <span class="r1">2</span> Installation
+ │  ├─ <span class="r1">2.1</span> Prerequisites
+ │  └─ <span class="r1">2.2</span> Instructions
+ ├─ <span class="r1">3</span> Usage
+ │  ├─ <span class="r1">3.1</span> Basic Usage
+ │  ├─ <span class="r1">3.2</span> Configuration
+ │  └─ <span class="r1">3.3</span> Command-Line Interface
+ └─ <span class="r1">4</span> License
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: list
+<span class="r6">────────────────── </span>Current <span class="r4">root</span>&#x27;s subsections list<span class="r6"> ───────────────────</span>
+→  root
+  → <span class="r1">1</span> Description
+  → <span class="r1">2</span> Installation
+    → <span class="r1">2.1</span> Prerequisites
+    → <span class="r1">2.2</span> Instructions
+  → <span class="r1">3</span> Usage
+    → <span class="r1">3.1</span> Basic Usage
+    → <span class="r1">3.2</span> Configuration
+    → <span class="r1">3.3</span> Command-Line Interface
+  → <span class="r1">4</span> License
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: e
+Select target session to edit <span class="r4">[root/description/installation/prerequisites/instructions/usage/basic </span>
+<span class="r4">usage/configuration/command-line interface/license]</span> <span class="r8">(License)</span>: installation
+Section <span class="r4">Installation</span> edit command <span class="r9">[a/mv/rm/rn/up/tree/list/i/h/q]</span>: tree
+<span class="r6">────────────── </span>Current <span class="r4">Installation</span>&#x27;s subsections tree<span class="r6"> ───────────────</span>
+└─ <span class="r1">2</span> Installation
+ ├─ <span class="r1">2.1</span> Prerequisites
+ └─ <span class="r1">2.2</span> Instructions
+Section <span class="r4">Installation</span> edit command <span class="r9">[a/mv/rm/rn/up/tree/list/i/h/q]</span>: list
+<span class="r6">────────────── </span>Current <span class="r4">Installation</span>&#x27;s subsections list<span class="r6"> ───────────────</span>
+→ <span class="r1">2</span> Installation
+  → <span class="r1">2.1</span> Prerequisites
+  → <span class="r1">2.2</span> Instructions
+Section <span class="r4">Installation</span> edit command <span class="r9">[a/mv/rm/rn/up/tree/list/i/h/q]</span>: 
+<span class="r10">KeyboardInterrupt</span><span class="r11"> &gt; Section edit operation aborted</span>
+Sections management command <span class="r4">[a/e/mv/rm/tree/list/temp/i/h/q]</span>: 
+<span class="r12">KeyboardInterrupt</span><span class="r13"> &gt; Exiting interactive INTERACTIVE.md generation</span>
 
 
-<span class="r1">────────────────────────────────────────────────────────────────────────────────────── </span>Interactive README.md version generated @ INTERACTIVE.md!<span class="r1"> ───────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r6">────────────────────────────── </span>Interactive README.md version generated @ INTERACTIVE.md!<span class="r6"> ───────────────────────────────</span>
 </code></pre>
 </body>
 </html>
