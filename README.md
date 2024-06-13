@@ -55,13 +55,8 @@ It can be useful to kickstart personal projects as it includes templating option
 
 Moreover, a wide range of flavoured markdown (GitHub Markdown) features are supported by the templated-compatible interactive mode commands. 
 
-
 <div align="center">
-	<u><i>ReadmeEngine CLI features</i></u>
-</div>
-
-<div align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
+	<img width = "500" src="https://github.com/Lpwlk/ReadmeEngine/blob/main/tests/hard-coded.svg">
 </div>
 
 > Note that some commands only generate a "base of content". Thus, generated content (example: custom-size table) may have to be updated after interactive mode.
@@ -111,16 +106,9 @@ md.run()
 
 Every menu & submenu includes a help utility which describes every available commands.
 
-
 <div align="center">
-	<u><i>Interactive CLI output</i></u>
+	<img width = "200" src="https://github.com/Lpwlk/ReadmeEngine/blob/main/tests/interactive-test-render.png">
 </div>
-
-
-<div align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
-</div>
-
 
 
 ### &nbsp;&nbsp;&nbsp;&nbsp; Templating
@@ -130,18 +118,6 @@ Templating consists of Markdown & Section objects recursive calls within a scrip
 Some methods still need to be updated to be fully available externally (some work only in interactive mode as they are not supposed to be very useful when it comes to template creation from outside the source-code).
 
 However, some structure display methods such as tree_sections and list_sections are available for the typical usecase described in the next subsection (Best practices). Future commits will include some example scripts using all available methods for personal templating purposes.
-
-
-<div align="center">
-	<u><i>Templating CLI output</i></u>
-</div>
-
-
-<div align="center">
-	<img width = "200" src="https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg">
-</div>
-
-
 
 ### &nbsp;&nbsp;&nbsp;&nbsp; Best practices
 
