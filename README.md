@@ -12,9 +12,12 @@
 
 <div align="center">
 
-![GitHub license](https://img.shields.io/github/license/Lpwlk/ReadmeEngine "Github repo license")
-[![GitHub profile](https://img.shields.io/static/v1?label=Lpwlk&message=profile&color=blue&logo=github)](https://github.com/Lpwlk "Go to GitHub profile page")
-[![GitHub tags](https://img.shields.io/github/v/tag/Lpwlk/ReadmeEngine?label=Version)](https://github.com/Lpwlk/ReadmeEngine/tags "Go to GitHub repo tags")
+![Open source](https://img.shields.io/badge/open-source-6894d4?logo=git&logoColor=6894d4)
+![GitHub license](https://img.shields.io/github/license/Lpwlk/ReadmeEngine?color=86c255 "Github repo license")
+[![GitHub profile](https://img.shields.io/static/v1?label=Lpwlk&message=profile&color=6894d4&logo=github)](https://github.com/Lpwlk "Go to GitHub profile page")
+[![GitHub tags](https://img.shields.io/github/v/tag/Lpwlk/ReadmeEngine?color=6894d4)
+](https://github.com/Lpwlk/ReadmeEngine/tags "Go to GitHub repo tags")
+[![GitHub last release](https://img.shields.io/github/release-date/Lpwlk/ReadmeEngine?color=6894d4?label=Release)](https://github.com/{gh_username}/{repo_name} "Go to GitHub repo")
 [![PyPI - Python version](https://img.shields.io/pypi/pyversions/readme-engine)](https://pypi.org/project/readme-engine "Supported Python version from PyPi package")
 [![PyPI - Package version](https://img.shields.io/pypi/v/readme-engine)](https://pypi.org/project/readme-engine "Pypi package version")
 [![PyPI - Package downloads](https://img.shields.io/pypi/dm/readme-engine)](https://pypi.org/project/readme-engine "Pypi package monthly downloads")

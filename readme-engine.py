@@ -16,7 +16,7 @@ interactive_run_theme = Theme(
     inherit = False,
     styles = {
     'prompt.choices': 'italic blue',
-    'prompt.default': 'blink bold yellow',
+    'prompt.default': 'bold yellow',
     'stitle': 'italic blue',
     'escape': 'red',
     'default': '',
@@ -26,7 +26,7 @@ section_edit_theme = Theme(
     inherit = False,
     styles = {
     'prompt.choices': 'italic green',
-    'prompt.default': 'blink bold yellow',
+    'prompt.default': 'bold yellow',
     'stitle': 'italic blue',
     'escape': 'orange1',
     'default': '',
@@ -36,7 +36,7 @@ content_creation_theme = Theme(
     inherit = False,
     styles = {
     'prompt.choices': 'italic yellow',
-    'prompt.default': 'blink bold yellow',
+    'prompt.default': 'bold yellow',
     'default': '',
     'stitle': 'italic blue',
     'escape': 'yellow',
@@ -66,9 +66,9 @@ console.print('''
   │   ______               _                _____            _            
   │   | ___ \\             | |              |  ___|          (_)           
   │   | |_/ /___  __ _  __| |_ __ ___   ___| |__ _ __   __ _ _ _ __   ___ 
-  │   |    // _ \/ _` |/ _` | '_ ` _ \ / _ |  __| '_ \ / _` | | '_ \ / _ \\
+  │   |    // _ \\/ _` |/ _` | '_ ` _ \\ / _ |  __| '_ \\ / _` | | '_ \\ / _ \\
   │   | |\\ |  __| (_| | (_| | | | | | |  __| |__| | | | (_| | | | | |  __/
-  │   \\_| \_\___|\__,_|\__,_|_| |_| |_|\___\____|_| |_|\__, |_|_| |_|\___|
+  │   \\_| \\_\\___|\\__,_|\\__,_|_| |_| |_|\\___\\____|_| |_|\\__, |_|_| |_|\\___|
   │                                                     __/ |             
   │                                                    |___/              
   │                                                                                                                         
@@ -253,7 +253,6 @@ def imagefmt(link: str, img_width: int, img_title: str) -> str:
     return center('\t'+underline(italic(img_title)), html = True) + center(f'\t<img width = "{img_width}" src="{link}">', html = True)
 
 def mdheader(content: str, level: int):
-    if level > 3: content = '\u27A4 ' + content
     return ' '.join(['#'*(level-1), '&nbsp;&nbsp;'*(level-2), content]) + '\n\n'
 
 def rbgmdlink(mdlink: str) -> str:
@@ -656,8 +655,8 @@ class Markdown:
         else:
             repo_name = Prompt.ask(prompt='Enter [bold]GitHub repository name[/bold]', default = 'ReadmeEngine', show_default = False, console = console)
             header = center('\n'+mdheader(repo_name, 2)+'\n')
-            gh_username = Prompt.ask('> Enter [bold]GitHub username[/bold]', default = 'Lpwlk', show_default = False, console = console)
-            pypi_pckg = Prompt.ask('> Enter [bold]PyPi package name[/bold]', default = 'pwlk', show_default = False, console = console)
+            gh_username = Prompt.ask('Enter [bold]GitHub username[/bold]', default = 'Lpwlk', show_default = False, console = console)
+            pypi_pckg = Prompt.ask('Enter [bold]PyPi package name[/bold]', default = 'pwlk', show_default = False, console = console)
             if Confirm.ask('Add [bold]Shields.io badges[/bold] in header ?', default = True, show_default = False, console = console):
                 header += self.make_badges(repo_name, gh_username, pypi_pckg)
             if Confirm.ask('Add [bold]Table of Contents[/bold] in header ?', default = True, show_default = False, console = console):
@@ -668,9 +667,13 @@ class Markdown:
                 
     def make_badges(self, repo_name: str, gh_username: str, pypi_pckg: str) -> str:
         badges = [  
-            f'![GitHub license](https://img.shields.io/github/license/{gh_username}/{repo_name} "Github repo license")',
-            f'[![GitHub profile](https://img.shields.io/static/v1?label={gh_username}&message=profile&color=blue&logo=github)](https://github.com/{gh_username} "Go to GitHub profile page")',
-            f'[![GitHub tags](https://img.shields.io/github/v/tag/{gh_username}/{repo_name}?label=Version)](https://github.com/{gh_username}/{repo_name}/tags "Go to GitHub repo tags")',
+
+            f'![Open source](https://img.shields.io/badge/open-source-6894d4?logo=git&logoColor=6894d4)',
+            f'![GitHub license](https://img.shields.io/github/license/{gh_username}/{repo_name}?color=86c255 "Github repo license")'
+            f'[![GitHub profile](https://img.shields.io/static/v1?label=Lpwlk&message=profile&color=6894d4&logo=github)](https://github.com/{gh_username} "Go to GitHub profile page")',
+            f'[![GitHub tags](https://img.shields.io/github/v/tag/{gh_username}/{repo_name}?color=6894d4)',
+            f'](https://github.com/{gh_username}/{repo_name}/tags "Go to GitHub repo tags")',
+            f'[![GitHub last release](https://img.shields.io/github/release-date/{gh_username}/{repo_name}?color=6894d4?label=Release)](https://github.com/{gh_username}/{repo_name} "Go to GitHub repo")',
             f'[![PyPI - Python version](https://img.shields.io/pypi/pyversions/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Supported Python version from PyPi package")',
             f'[![PyPI - Package version](https://img.shields.io/pypi/v/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Pypi package version")',
             f'[![PyPI - Package downloads](https://img.shields.io/pypi/dm/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Pypi package monthly downloads")',
@@ -708,23 +711,38 @@ class Markdown:
 
   
     def generate_template(self, template: str | None = None) -> None:
-        sdict = {
-            'desc': Section('Description', ['Repository project description including project typical usecase, available features and links to any reference visitors might be unfamiliar with.']),
-            'inst': Section('Installation', ['Installation guide for each tool included in the repository.']),
-            'uses': Section('Usage', ['Details about different usecases of the repository tools using text, image(s) and/or gif(s).', imagefmt('https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', 200, 'Dogwifhat is goated')]),
-            'exam': Section('Examples', ['Examples of executions & results for the previous described usecases.']),
-            'rdmp': Section('Roadmap', ['Developement goals as well as current planned or achieved milestones list']),
-            'lcns': Section('License', ['For open source projects, say how it is licensed.']),
-            'auth': Section('Authors', ['The repo has been created by [Author] and maintained by [Author]. Feel free to contact [Author] via email or creating a GitHub issue for any repo-related support request.']),
+        # sdict = {
+        #     'desc': Section('Description', ['Repository project description including project typical usecase, available features and links to any reference visitors might be unfamiliar with.']),
+        #     'inst': Section('Installation', ['Installation guide for each tool included in the repository.']),
+        #     'uses': Section('Usage', ['Details about different usecases of the repository tools using text, image(s) and/or gif(s).', imagefmt('https://i.kym-cdn.com/photos/images/original/001/688/970/a72.jpg', 200, 'Dogwifhat is goated')]),
+        #     'exam': Section('Examples', ['Examples of executions & results for the previous described usecases.']),
+        #     'rdmp': Section('Roadmap', ['Developement goals as well as current planned or achieved milestones list']),
+        #     'lcns': Section('License', ['For open source projects, say how it is licensed.']),
+        #     'auth': Section('Authors', ['The repo has been created by [Author] and maintained by [Author]. Feel free to contact [Author] via email or creating a GitHub issue for any repo-related support request.']),
+        # }
+        # sdict['inst'].add_section(Section('Prerequisites', ['Required software (Python version, specific dependencies).']), verbose=False)
+        # sdict['inst'].add_section(Section('Instructions', ['Detailed steps to install the project on any machine.']), verbose=False)
+        # sdict['uses'].add_section(Section('Basic Usage', ['Basic usage examples.']), verbose=False)
+        # sdict['uses'].add_section(Section('Configuration', ['Configuration options.']), verbose=False)
+        # sdict['uses'].add_section(Section('Command-Line Interface', ['How to use the CLI (if applicable).']), verbose=False)
+        # sdict['rdmp'].add_section(Section('Milestones', [center(mdtable('Past & future patches', 2, 6))]), verbose=False)
+        # sdict['exam'].add_section(Section('Mode 1', ['How to execute the example scripts in mode 1']), verbose=False)
+        # sdict['exam'].add_section(Section('Mode 2', ['How to execute the example scripts in mode 2']), verbose=False)
+        sdict = { # No content source dict
+            'desc': Section('Description'),
+            'inst': Section('Installation'),
+            'uses': Section('Usage'),
+            'rdmp': Section('Roadmap'),
+            'cont': Section('Contributing'),
+            'lcns': Section('License'),
+            'refs': Section('References'),
         }
-        sdict['inst'].add_section(Section('Prerequisites', ['Required software (Python version, specific dependencies).']), verbose=False)
-        sdict['inst'].add_section(Section('Instructions', ['Detailed steps to install the project on any machine.']), verbose=False)
-        sdict['uses'].add_section(Section('Basic Usage', ['Basic usage examples.']), verbose=False)
-        sdict['uses'].add_section(Section('Configuration', ['Configuration options.']), verbose=False)
-        sdict['uses'].add_section(Section('Command-Line Interface', ['How to use the CLI (if applicable).']), verbose=False)
-        sdict['rdmp'].add_section(Section('Milestones', [center(mdtable('Past & future patches', 2, 6))]), verbose=False)
-        sdict['exam'].add_section(Section('Mode 1', ['How to execute the example scripts in mode 1']), verbose=False)
-        sdict['exam'].add_section(Section('Mode 2', ['How to execute the example scripts in mode 2']), verbose=False)
+        sdict['inst'].add_section(Section('Prerequisites'), verbose=False)
+        sdict['inst'].add_section(Section('Instructions'), verbose=False)
+        sdict['inst'].add_section(Section('Dependancies'), verbose=False)
+        sdict['uses'].add_section(Section('Basic usage'), verbose=False)
+        sdict['uses'].add_section(Section('Examples'), verbose=False)
+        sdict['uses'].add_section(Section('Usecases'), verbose=False)
         
         if template: cmd = template
         else:
@@ -738,7 +756,7 @@ class Markdown:
         match cmd:
             case 'd':
                 template_name = 'Default'
-                self.root.subsections = [sdict[key] for key in ['desc', 'inst', 'uses', 'exam', 'rdmp', 'lcns', 'auth']]
+                self.root.subsections = [sdict[key] for key in sdict.keys()]
             case 'm':
                 template_name = 'Minimal'
                 self.root.subsections = [sdict[key] for key in ['desc', 'inst', 'uses', 'lcns']]
