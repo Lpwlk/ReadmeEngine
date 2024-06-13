@@ -68,13 +68,13 @@ Moreover, a wide range of flavoured markdown (GitHub Markdown) features are supp
 
 ## &nbsp;&nbsp; Installation
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Prerequisites
+### &nbsp;&nbsp;&nbsp;&nbsp; Prerequisites
 
 The package was written on Python 3.12 version but supported versions will be determined when the package will be released on PyPi. 
 
 This section will be updated accordingly with the first PyPi realease.
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Instructions
+### &nbsp;&nbsp;&nbsp;&nbsp; Instructions
 
 To work with the tool on your machine and start templating with your own preferences, you can clone the repo or download the PyPi package using pip ...
 
@@ -90,7 +90,7 @@ Downloading the PyPi package ...
 pip install readme-engine
 ```
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Dependancies
+### &nbsp;&nbsp;&nbsp;&nbsp; Dependancies
 
 The engine is built on top of the rich package for CLI rendering in interactive mode as well as for verbose features & tools provided by both python objects.
 
@@ -98,7 +98,7 @@ The engine is built on top of the rich package for CLI rendering in interactive 
 
 The tool is designed using a tree structure for sections and section's contents. Every element (Section or content) can me moved/edited or removed using commands and help utilities are available withing every interactive menu & submenus.
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Interactive mode
+### &nbsp;&nbsp;&nbsp;&nbsp; Interactive mode
 
 The interactive mode can be started using the run method on Markdown object instance. It includes several submenus for header/footer generation as well as section structure & content management.
 
@@ -123,11 +123,11 @@ Every menu & submenu includes a help utility which describes every available com
 
 
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Templating
+### &nbsp;&nbsp;&nbsp;&nbsp; Templating
 
 Templating consists of Markdown & Section objects recursive calls within a script to create various kinds of README.md structures with control on titles and contents.
 
-Some methods still need to be updated to be fully available externally (some work only in interactive mode as they are not supposed to be very useful when it comes to template creation from outside the source-code.
+Some methods still need to be updated to be fully available externally (some work only in interactive mode as they are not supposed to be very useful when it comes to template creation from outside the source-code).
 
 However, some structure display methods such as tree_sections and list_sections are available for the typical usecase described in the next subsection (Best practices). Future commits will include some example scripts using all available methods for personal templating purposes.
 
@@ -143,7 +143,7 @@ However, some structure display methods such as tree_sections and list_sections 
 
 
 
-### &nbsp;&nbsp;&nbsp;&nbsp; ➤ Best practices
+### &nbsp;&nbsp;&nbsp;&nbsp; Best practices
 
 The ideal use of this tool would be to design your own base template for some of your (future) projects and to call interactive mode on the templated object in order to automate your README.md redactions/updates (fast copy&paste of previous markdown content works well with interactive mode prompts).
 
