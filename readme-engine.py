@@ -671,8 +671,7 @@ class Markdown:
             f'![Open source](https://img.shields.io/badge/open-source-6894d4?logo=git&logoColor=6894d4)',
             f'![GitHub license](https://img.shields.io/github/license/{gh_username}/{repo_name}?color=86c255 "Github repo license")'
             f'[![GitHub profile](https://img.shields.io/static/v1?label=Lpwlk&message=profile&color=6894d4&logo=github)](https://github.com/{gh_username} "Go to GitHub profile page")',
-            f'[![GitHub tags](https://img.shields.io/github/v/tag/{gh_username}/{repo_name}?color=6894d4)',
-            f'](https://github.com/{gh_username}/{repo_name}/tags "Go to GitHub repo tags")',
+            f'[![GitHub tags](https://img.shields.io/github/v/tag/{gh_username}/{repo_name}?color=6894d4)](https://github.com/{gh_username}/{repo_name}/tags "Go to GitHub repo tags")',
             f'[![GitHub last release](https://img.shields.io/github/release-date/{gh_username}/{repo_name}?color=6894d4?label=Release)](https://github.com/{gh_username}/{repo_name} "Go to GitHub repo")',
             f'[![PyPI - Python version](https://img.shields.io/pypi/pyversions/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Supported Python version from PyPi package")',
             f'[![PyPI - Package version](https://img.shields.io/pypi/v/{pypi_pckg})](https://pypi.org/project/{pypi_pckg} "Pypi package version")',
